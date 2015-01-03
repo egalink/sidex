@@ -2,10 +2,11 @@
 
 /*
  * ----------------------------------------------------------------------------
- * SIDEX - El hijo pequeño de los desarrolladores PHP.
+ * SIDEX - The little son of PHP developers.
  * ----------------------------------------------------------------------------
  *
  * @package  Sidex
+ * @version  0.0.3
  * @author   Edgar Jakim Hernández Arrieta  <egalink@gmail.com>
  */
 

@@ -1,5 +1,7 @@
 <?php  if ( ! defined('APPPATH')) exit('No direct script access allowed.');
 
+use \Sidex\Http\Response\View as View;
+
 class IndexController {
 
     /**
@@ -19,7 +21,14 @@ class IndexController {
      */
     public function index()
     {
-        echo 'Hello World!';
+        $view = new View();
+        $view->make('IndexController/index')
+             ->with('title', 'Sidex says..')
+             ->with('message', 'Hi Welcome to Sidex Framework!');
+
+        // and more code here...
+
+        $view->render();
     }
 
 }

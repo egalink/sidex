@@ -1,4 +1,5 @@
 sidex
 =====
 
-Sidex php, el hijo pequeño de los desarrolladores PHP.
+Sidex php, the little son of PHP developers.
+
