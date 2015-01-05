@@ -43,6 +43,19 @@ require __DIR__ . '/autoload.php';
  *
  */
 $frontController = new \Sidex\Http\Controller\FrontController(require application_path('config/application.php'));
+
+
+/*
+ *--------------------------------------------------------------------------
+ * RUN THE APPLICATION
+ *--------------------------------------------------------------------------
+ *
+ * Once we have the application, we can simply call the run method, which will
+ * execute the request and send the response back to the client's browser
+ * allowing them to enjoy the creative and wonderful application.
+ *
+ */
+
 $frontController->run();
 
 

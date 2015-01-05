@@ -15,7 +15,7 @@ class IndexController {
     }
 
     /**
-     * Say Hello World!
+     * Say Hello!
      *
      * @access public
      */
@@ -23,11 +23,9 @@ class IndexController {
     {
         $view = new View();
         $view->make('IndexController/index')
-             ->with('title', 'Sidex says..')
+             ->with('title', 'Jakim says..')
              ->with('message', 'Hi Welcome to Sidex Framework!');
-
         // and more code here...
-
         $view->render();
     }
 

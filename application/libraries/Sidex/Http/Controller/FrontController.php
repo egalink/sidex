@@ -13,7 +13,7 @@ class FrontController implements FrontControllerInterface {
     protected $controller    = self::DEFAULT_CONTROLLER;
     protected $action        = self::DEFAULT_ACTION;
     protected $params        = array();
-    protected $uriSegments   = ['controller', 'action', 'params'];
+    protected $uriSegments   = array('controller', 'action', 'params');
 
 
     public function __construct(array $options = array())
