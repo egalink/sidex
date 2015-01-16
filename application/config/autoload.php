@@ -1,4 +1,4 @@
-<?php  if ( ! defined('APPPATH')) exit('No direct script access allowed.');
+<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
 /**
  * ----------------------------------------------------------------------------
@@ -42,3 +42,4 @@ return array(
 
 /* End of file autoload.php */
 /* Location: ./(<application folder>/)config/autoload.php */
+

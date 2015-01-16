@@ -1,4 +1,5 @@
-<?php  if ( ! defined('APPPATH')) exit('No direct script access allowed.');
+<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
+
 
 /*
  *-----------------------------------------------------------------------------
@@ -13,7 +14,7 @@
  *
  */
 
-if (file_exists($composerAutoload = APPPATH . 'vendor/autoload.php')) {
+if (file_exists($composerAutoload = APPATH . 'vendor/autoload.php')) {
     require $composerAutoload;
 }
 
@@ -73,8 +74,8 @@ spl_autoload_register(function($className)
     $fileName .= str_replace('_', $separator, $className) . '.php';
 
     foreach ($loadPaths as $path) {
-        $toLoad = buildpath($path . $fileName);
-        if (is_file($toLoad) === true) {
+        $toLoad = build_path($path, $fileName);
+        if (is_file($toLoad)) {
             $fileName = $toLoad;
         }
     }
@@ -84,3 +85,4 @@ spl_autoload_register(function($className)
 
 /* End of file autoload.php */
 /* Location: ./(<application folder>/)bootstrap/autoload.php */
+

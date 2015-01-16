@@ -1,27 +1,47 @@
-<?php  if ( ! defined('APPPATH')) exit('No direct script access allowed.');
+<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
 /**
  * ----------------------------------------------------------------------------
- * ADDITIONAL FUNCTIONS FOR SIDEX
+ * ADDITIONAL PHP FUNCTIONS FOR SIDEX
  * ----------------------------------------------------------------------------
  *
  * The additional functions for your application.
  *
  */
 
-if (! function_exists('application_path')) {
+
+if (! function_exists('build_path')) {
 
     /**
-     * Returns the path within APPPATH that was generated in the file
-     * index.php (front controller).
+     * Builds a file path with the appropriate directory separator.
      *
      * @access public
      * @param  string
-     * @return string
+     * @return string Path
+     */
+    function build_path($path = '')
+    {
+        $path = (func_num_args() > 1) ? join('/', func_get_args()) : $path;
+        $path = str_replace('\\', '/', $path);
+        $path = preg_replace('/\/+/', '/', $path);
+        return $path;
+    }
+}
+
+
+if (! function_exists('application_path')) {
+
+    /**
+     * Returns the path within APPATH that was generated in the file
+     * index.php (front controller) with the appropriate directory separator.
+     *
+     * @access public
+     * @param  string
+     * @return string Path
      */
     function application_path($path = '')
     {
-        return buildpath(APPPATH . $path);
+        return build_path(APPATH, $path);
     }
 }
 
@@ -29,15 +49,17 @@ if (! function_exists('application_path')) {
 if (! function_exists('debug')) {
 
     /**
-     * Displays information about a variable in a way that's readable by humans.
+     * Displays information about a variable in a way that's readable by
+     * humans.
      *
      * @access public
      * @param  mixed
+     * @return html
      */
     function debug()
     {
         $trace = debug_backtrace();
-        echo '<pre style="font-family:monospace;font-size:11px;">Archivo: ';
+        echo '<pre style="font-family:monospace;font-size:11px;">File: ';
         echo $trace[0]['file'].' - '.$trace[0]['line'];
         echo '</pre>';
 
@@ -58,11 +80,12 @@ if (! function_exists('vdump')) {
      *
      * @access public
      * @param  mixed
+     * @return html
      */
     function vdump()
     {
         $trace = debug_backtrace();
-        echo '<pre style="font-family:monospace;font-size:11px;">Archivo: ';
+        echo '<pre style="font-family:monospace;font-size:11px;">File: ';
         echo $trace[0]['file'].' - '.$trace[0]['line'];
         echo '</pre>';
 
@@ -71,24 +94,6 @@ if (! function_exists('vdump')) {
             echo var_dump($variable);
             echo '</pre>';
         }
-    }
-}
-
-
-if (! function_exists('buildpath')) {
-
-    /**
-     * Generates a file path with DIRECTORY_SEPARATOR.
-     *
-     * @access public
-     * @param  string
-     * @return string
-     */
-    function buildpath($path = '')
-    {
-        $path = str_replace('\\','/', $path);
-        $path = preg_replace('/\/+/', DIRECTORY_SEPARATOR, $path);
-        return $path;
     }
 }
 
@@ -146,3 +151,4 @@ if (! function_exists('base_url')) {
 
 /* End of file functions.php */
 /* Location: ./(<application folder>/)bootstrap/functions.php */
+

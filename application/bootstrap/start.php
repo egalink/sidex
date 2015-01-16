@@ -1,16 +1,16 @@
-<?php  if ( ! defined('APPPATH')) exit('No direct script access allowed.');
+<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
 
 /*
  *-----------------------------------------------------------------------------
- * ADDING ADDITIONAL FUNCTIONS
+ * ADDING ADDITIONAL PHP FUNCTIONS
  *-----------------------------------------------------------------------------
  *
- * The additional functions for your application.
+ * The additional php functions for your application.
  *
  */
 
-require __DIR__ . '/functions.php';
+require 'functions.php';
 
 
 /*
@@ -26,7 +26,7 @@ require __DIR__ . '/functions.php';
  *
  */
 
-require __DIR__ . '/autoload.php';
+require 'autoload.php';
 
 
 /*
@@ -38,11 +38,12 @@ require __DIR__ . '/autoload.php';
  * sends to the application, processes the requests, makes a call to the
  * resources and generate results.
  *
- * For now, the front controller use the pattern RESTful
- * (Representational State Transfer Complete).
+ * For now, the front controller use the RESTful pattern.
  *
  */
-$frontController = new \Sidex\Http\Controller\FrontController(require application_path('config/application.php'));
+
+$sidexConfigFile = require application_path('config/sidex.php');
+$frontController = new \Sidex\Http\Controller\FrontController($sidexConfigFile);
 
 
 /*
@@ -61,3 +62,4 @@ $frontController->run();
 
 /* End of file start.php */
 /* Location: ./(<application folder>/)bootstrap/start.php */
+
