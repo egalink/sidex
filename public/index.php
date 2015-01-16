@@ -8,6 +8,7 @@
  * @package  Sidex
  * @version  0.0.5
  * @author   Edgar Jakim Hernández Arrieta  <egalink@gmail.com>
+ *
  */
 
 
@@ -37,7 +38,7 @@ $applicationPath = '../application';
 define('FCNAME', pathinfo(__FILE__, PATHINFO_BASENAME));
 
 // Path to the front controller (this file):
-define('FCPATH', dirname(__FILE__) . '/');
+define('FCPATH', str_replace('\\', '/', __DIR__ . '/'));
 
 
 /*
@@ -50,25 +51,27 @@ define('FCPATH', dirname(__FILE__) . '/');
  */
 
 if ($applicationPath = realpath($applicationPath)) {
-    $applicationPath.= '/';
+    $applicationPath = str_replace('\\', '/', $applicationPath . '/');
 }
 
-if ( ! is_dir($applicationPath)) {
-    exit("Your application folder path does not appear to be set correctly in: " . __FILE__);
-}
+is_dir($applicationPath)
+    or die("Your application folder path does not appear to be set correctly.");
 
-define('APPPATH', $applicationPath);
+define('APPATH', $applicationPath);
 
 
 /*
- * --------------------------------------------------------------------
+ * ----------------------------------------------------------------------------
  * LOAD THE BOOTSTRAP FILE
- * --------------------------------------------------------------------
+ * ----------------------------------------------------------------------------
  *
  * And away we go...
  *
  */
-require_once APPPATH . 'bootstrap/start.php';
+
+require_once APPATH . 'bootstrap/start.php';
+
 
 /* End of file index.php */
 /* Location: ./(<server folder>/)index.php */
+
