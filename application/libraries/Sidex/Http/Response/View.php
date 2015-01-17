@@ -71,7 +71,7 @@ class View {
             exit("The view name is not set correctly.");
         }
 
-        $viewPath = APPPATH . self::VIEW_FOLDER . '/' . $name . '.php';
+        $viewPath = APPATH . self::VIEW_FOLDER . '/' . $name . '.php';
         $viewFile = $this->buildpath($viewPath);
 
         if (is_file($viewFile) === false) {

@@ -1,4 +1,4 @@
-<?php  if ( ! defined('APPPATH')) exit('No direct script access allowed.');
+<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
 use \Sidex\Http\Response\View as View;
 

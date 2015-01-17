@@ -21,10 +21,11 @@ if (! function_exists('build_path')) {
      */
     function build_path($path = '')
     {
-        $path = (func_num_args() > 1) ? join('/', func_get_args()) : $path;
-        $path = str_replace('\\', '/', $path);
-        $path = preg_replace('/\/+/', '/', $path);
-        return $path;
+        if (func_num_args() > 1) {
+            $path = join('/', func_get_args());
+        }
+
+        return preg_replace('/\/+/', '/', str_replace('\\', '/', $path));
     }
 }
 

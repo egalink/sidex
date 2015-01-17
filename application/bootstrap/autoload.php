@@ -63,7 +63,6 @@ spl_autoload_register(function($className)
     $fileName  = '';
     $namespace = '';
     $separator = DIRECTORY_SEPARATOR;
-    $loadPaths = require application_path('config/autoload.php');
 
     if ($lastNsPos = strrpos($className, '\\')) {
         $namespace = substr($className, 0, $lastNsPos);
@@ -73,10 +72,10 @@ spl_autoload_register(function($className)
 
     $fileName .= str_replace('_', $separator, $className) . '.php';
 
-    foreach ($loadPaths as $path) {
-        $toLoad = build_path($path, $fileName);
-        if (is_file($toLoad)) {
-            $fileName = $toLoad;
+    foreach (require application_path('config/autoload.php') as $path) {
+        $realPath = build_path($path, $fileName);
+        if (is_file($realPath) === true) {
+            $fileName = $realPath;
         }
     }
 
