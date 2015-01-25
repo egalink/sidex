@@ -2,10 +2,10 @@
 
 interface UrlInterface {
 
-	public function parseUrl($url = '/');
-	public function requestUri();
-	public function performUrl($uri = '');
-	public function baseUrl($uri = '');
+    public function parseUrl($url = '/');
+    public function requestUri();
+    public function performUrl($uri = '');
+    public function baseUrl($uri = '');
 
 }
 

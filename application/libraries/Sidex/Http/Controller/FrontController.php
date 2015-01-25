@@ -5,43 +5,68 @@ use \Sidex\Http\Controller\FrontControllerInterface as FrontControllerInterface;
 
 class FrontController implements FrontControllerInterface {
 
-
     const DEFAULT_CONTROLLER = 'IndexController';
     const DEFAULT_ACTION     = 'index';
 
+    private $controller    = self::DEFAULT_CONTROLLER;
+    private $action        = self::DEFAULT_ACTION;
+    private $params        = array();
+    private $uriSegments   = array('controller', 'action', 'params');
 
-    protected $controller    = self::DEFAULT_CONTROLLER;
-    protected $action        = self::DEFAULT_ACTION;
-    protected $params        = array();
-    protected $uriSegments   = array('controller', 'action', 'params');
+    /**
+     * FrontController class constructor.
+     *
+     * @param  array $params (the array of configuration attributes).
+     * @return void
+     */
+    public function __construct(array $params = array())
+    {
+        $this->setConfiguration($params);
+        $this->getClientRequest(new Url);
+    }
 
-
-    public function __construct(array $options = array())
+    /**
+     * Takes an array of values to set as configuration attributes.
+     *
+     * @param  array $options (the array of values).
+     * @return void
+     */
+    public function setConfiguration(array $options)
     {
         foreach ($options as $key=>$value) {
             $this->setConfig($key, $value);
         }
-
-        $this->getClientRequest(new Url);
     }
 
-
+    /**
+     * Set a value as configuration attribute.
+     *
+     * @param  string $attribute (the attribute name).
+     * @param  mixed  $value
+     * @return void
+     */
     public function setConfig($attribute, $value)
     {
-        if (isset($this->{$attribute}) and ! is_null($value)) {
+        if (isset($this->{$attribute}) and is_null($value) === false) {
             $this->{$attribute} = $value;
         }
     }
 
-
-    public function getClientRequest(Url $url)
+    /**
+     * Gets the client request.
+     *
+     * @access public
+     * @param  Sidex\Http\Request\Url Object in $Url
+     * @return void
+     */
+    public function getClientRequest(Url $Url)
     {
-        $ruri = $url->requestUri();
+        $ruri = $Url->requestUri();
 
         if ($ruri == '') {
             return;
         }
-
+        // END REVISION 25.01.2015 01:16:24:
         $this->configureRequest($ruri);
     }
 

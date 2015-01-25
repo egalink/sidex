@@ -1,33 +1,70 @@
 <?php namespace Sidex\Http\Request;
 
 use \Sidex\Http\Request\UrlInterface as UrlInterface;
+use \Sidex\Http\Input\Server as Server;
 
 class Url implements UrlInterface {
 
 
     const FRONT_CONTROLLER_NAME = FCNAME;
 
+    /**
+     * Sidex\Http\Input\Server Object
+     *
+     * @access private
+     */
+    private $server;
 
-    public function parseUrl($url = '/')
+    /**
+     * Url class constructor.
+     *
+     * @access private
+     */
+    public function __construct()
     {
-        $purl = trim(parse_url($url, PHP_URL_PATH), '/');
-        return preg_replace('/[^a-zA-Z0-9.]/', '/', $purl);
+        $this->server = new Server;
     }
 
+    /**
+     * Parse a correct functionally URL for the application.
+     *
+     * @access public
+     * @param  string $url (The URL to parse.)
+     * @return string
+     */
+    public function parseUrl($url = '/')
+    {
+        $parsedUrl = parse_url($url, PHP_URL_PATH);
+        return preg_replace('/[^a-zA-Z0-9_]/', '/', trim($parsedUrl, '/'));
+    }
 
+    /**
+     * Returns the URI which was given in order to access to any page from
+     * the application.
+     *
+     * @access public
+     * @return string (the requested URI.)
+     */
     public function requestUri()
     {
-        $requestUri = $_SERVER['REQUEST_URI'];
-        $scriptName = $_SERVER['SCRIPT_NAME'];
+        $requestUri = $this->server->get('REQUEST_URI');
+        $scriptName = $this->server->get('SCRIPT_NAME');
         $scriptPath = dirname($scriptName);
 
-        if (strpos($requestUri, $scriptName) === 0) {
-            // remove the script name in the request uri:
-            $requestUri = substr($requestUri, strlen($scriptName));
-        }
-        elseif (strpos($requestUri, $scriptPath) === 0) {
-            // remove the path of the script that receives the request:
-            $requestUri = substr($requestUri, strlen($scriptPath));
+        switch ($requestUri) {
+
+            case (strpos($requestUri, $scriptName) === 0):
+                // remove the script name in the request uri:
+                $requestUri = substr($requestUri, strlen($scriptName));
+                break;
+
+            case (strpos($requestUri, $scriptPath) === 0):
+                // remove the path of the script that receives the request:
+                $requestUri = substr($requestUri, strlen($scriptPath));
+                break;
+
+            default:
+                $requestUri = $this->server->get('PATH_INFO');
         }
 
         return $this->parseUrl($requestUri);
@@ -36,7 +73,7 @@ class Url implements UrlInterface {
 
     public function performUrl($uri = '')
     {
-        $url = $this->parseUrl($_SERVER['REQUEST_URI']);
+        $url = $this->parseUrl($this->server->get('REQUEST_URI'));
 
         if ($requestUri = $this->requestUri()) {
             $url = str_replace($requestUri, '', $url);
