@@ -55,28 +55,33 @@ class FrontController implements FrontControllerInterface {
     /**
      * Gets the client request.
      *
-     * @access public
      * @param  Sidex\Http\Request\Url Object in $Url
      * @return void
      */
     public function getClientRequest(Url $Url)
     {
-        $ruri = $Url->requestUri();
+        $requestUri = $Url->requestUri();
 
-        if ($ruri == '') {
+        if ($requestUri == '') {
             return;
         }
-        // END REVISION 25.01.2015 01:16:24:
-        $this->configureRequest($ruri);
+
+        $this->configureRequest($requestUri);
     }
 
-
-    public function configureRequest($ruri)
+    /**
+     * Configure the client request.
+     *
+     * @param  string $uri (the requested uri.)
+     * @return void
+     */
+    public function configureRequest($uri)
     {
-        $rsegments = explode('/', $ruri, 3);
+        $segments = explode('/', $uri, 3);
 
+        // Gets all available segments in the uri:
         foreach ($this->uriSegments as $key => $val) {
-            ${$val} = isset($rsegments[$key]) ? $rsegments[$key] : null;
+            ${$val} = isset ($segments[$key])? $segments[$key] : null;
         }
 
         if (isset($controller)) {
@@ -92,45 +97,66 @@ class FrontController implements FrontControllerInterface {
         }
     }
 
-
+    /**
+     * Sets a controller name to be instantiated if the controller exists in the
+     * controller's folder without namespace.
+     *
+     * @param  string $controller (the controller name.)
+     * @return Sidex\Http\Controller\FrontController Object
+     */
     public function setController($controller)
     {
         $controller = ucfirst(strtolower($controller)) . 'Controller';
 
         if (! class_exists($controller)) {
-            throw new \InvalidArgumentException("El controlador: '{$controller}' no existe.");
+            throw new \InvalidArgumentException("The controller: '{$controller}' does not exists.");
         }
 
         $this->controller = $controller;
         return $this;
     }
 
-
+    /**
+     * Sets a action name to be called if the action exists in the instantiated
+     * controller.
+     *
+     * @param  string $action (the action name.)
+     * @return Sidex\Http\Controller\FrontController Object
+     */
     public function setAction($action)
     {
         $reflector = new \ReflectionClass($this->controller);
 
         if (! $reflector->hasMethod($action)) {
-            throw new \InvalidArgumentException("El metodo: '{$action}' no esta definido.");
+            throw new \InvalidArgumentException("Action: '{$action}' not defined.");
         }
 
         $this->action = $action;
         return $this;
     }
 
-
+    /**
+     * The parameters to be passed to the controller action, as an indexed
+     * array.
+     *
+     * @param  array  $params
+     * @return Sidex\Http\Controller\FrontController Object
+     */
     public function setParams(array $params)
     {
         $this->params = $params;
         return $this;
     }
 
-
+    /**
+     * Call a callback with an array of parameters.
+     *
+     * @return void
+     */
     public function run()
     {
         call_user_func_array([new $this->controller, $this->action], $this->params);
     }
-
 
     // end class...
 }
