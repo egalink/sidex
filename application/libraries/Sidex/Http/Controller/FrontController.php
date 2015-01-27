@@ -14,7 +14,7 @@ class FrontController implements FrontControllerInterface {
     private $uriSegments   = array('controller', 'action', 'params');
 
     /**
-     * FrontController class constructor.
+     * Class constructor.
      *
      * @param  array $params (the array of configuration attributes).
      * @return void
@@ -70,7 +70,7 @@ class FrontController implements FrontControllerInterface {
     }
 
     /**
-     * Configure the client request.
+     * Configures the client request.
      *
      * @param  string $uri (the requested uri.)
      * @return void
@@ -98,8 +98,7 @@ class FrontController implements FrontControllerInterface {
     }
 
     /**
-     * Sets a controller name to be instantiated if the controller exists in the
-     * controller's folder without namespace.
+     * Sets a controller name to be instantiated.
      *
      * @param  string $controller (the controller name.)
      * @return Sidex\Http\Controller\FrontController Object
@@ -117,8 +116,7 @@ class FrontController implements FrontControllerInterface {
     }
 
     /**
-     * Sets a action name to be called if the action exists in the instantiated
-     * controller.
+     * Sets the action name to be called from the controller.
      *
      * @param  string $action (the action name.)
      * @return Sidex\Http\Controller\FrontController Object
@@ -128,7 +126,7 @@ class FrontController implements FrontControllerInterface {
         $reflector = new \ReflectionClass($this->controller);
 
         if (! $reflector->hasMethod($action)) {
-            throw new \InvalidArgumentException("Action: '{$action}' not defined.");
+            throw new \InvalidArgumentException("The action: '{$action}' is not defined.");
         }
 
         $this->action = $action;
@@ -136,7 +134,7 @@ class FrontController implements FrontControllerInterface {
     }
 
     /**
-     * The parameters to be passed to the controller action, as an indexed
+     * Sets the parameters to be passed to the controller action, as an indexed
      * array.
      *
      * @param  array  $params
@@ -149,7 +147,7 @@ class FrontController implements FrontControllerInterface {
     }
 
     /**
-     * Call a callback with an array of parameters.
+     * Call to the controller action with an array of parameters.
      *
      * @return void
      */
