@@ -59,6 +59,15 @@ if (file_exists($composerAutoload = APPATH . 'vendor/autoload.php')) {
 
 spl_autoload_register(function($className)
 {
+    $autoloadConfig = require application_path('config/autoload.php');
+
+    // implementing the lazy class loading:
+    if (in_array($className, array_keys($autoloadConfig['aliases'])) === true) {
+        $alias = array_flip([$className]);
+        $class = array_intersect_key($autoloadConfig['aliases'], $alias);
+        return class_alias($class[$className], $className);
+    }
+
     $className = ltrim($className, '\\');
     $fileName  = '';
     $namespace = '';
@@ -72,7 +81,7 @@ spl_autoload_register(function($className)
 
     $fileName .= str_replace('_', $separator, $className) . '.php';
 
-    foreach (require application_path('config/autoload.php') as $path) {
+    foreach ($autoloadConfig['paths'] as $path) {
         $realPath = build_path($path, $fileName);
         if (is_file($realPath) === true) {
             $fileName = $realPath;

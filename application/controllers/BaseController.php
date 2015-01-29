@@ -1,7 +1,5 @@
 <?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
-use \Sidex\Http\Response\View as View;
-
 class BaseController {
 
     /**
@@ -21,14 +19,15 @@ class BaseController {
      */
     public function index()
     {
-        $view = new View();
+        $view = new View;
         $view->make('BaseController/index')
-             ->with('title', 'Sidex says..')
+             ->with('title', 'Sidex Framework')
              ->with('message', 'Hi Welcome to Sidex Framework!');
         // and more code here...
         $view->render();
     }
 
+    // end class...
 }
 
 /* End of file BaseController.php */
