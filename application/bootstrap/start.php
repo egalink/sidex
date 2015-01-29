@@ -10,7 +10,7 @@
  *
  */
 
-require 'functions.php';
+require __DIR__ . '/functions.php';
 
 
 /*
@@ -26,7 +26,7 @@ require 'functions.php';
  *
  */
 
-require 'autoload.php';
+require __DIR__ . '/autoload.php';
 
 
 /*

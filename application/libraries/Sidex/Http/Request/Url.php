@@ -16,9 +16,16 @@ class Url implements UrlInterface {
     private $server;
 
     /**
+     * Pattern for friendly URL's.
+     *
+     * @var string
+     */
+    private $regexp = '/[^a-zA-Z0-9_.]/';
+
+    /**
      * Url class constructor.
      *
-     * @access private
+     * @return void
      */
     public function __construct()
     {
@@ -28,21 +35,19 @@ class Url implements UrlInterface {
     /**
      * Parse a correct functionally URL for the application.
      *
-     * @access public
      * @param  string $url (The URL to parse.)
      * @return string
      */
     public function parseUrl($url = '/')
     {
         $parsedUrl = parse_url($url, PHP_URL_PATH);
-        return preg_replace('/[^a-zA-Z0-9_]/', '/', trim($parsedUrl, '/'));
+        return preg_replace($this->regexp, '/', trim($parsedUrl, '/'));
     }
 
     /**
      * Returns the URI which was given in order to access to any page from
      * the application.
      *
-     * @access public
      * @return string (the requested URI.)
      */
     public function requestUri()
@@ -70,8 +75,12 @@ class Url implements UrlInterface {
         return $this->parseUrl($requestUri);
     }
 
-
-    public function performUrl($uri = '')
+    /**
+     * Generate a absolute URL.
+     *
+     * @return URL
+     */
+    public function performUrl()
     {
         $url = $this->parseUrl($this->server->get('REQUEST_URI'));
 
@@ -80,21 +89,38 @@ class Url implements UrlInterface {
             $url = rtrim($url, '/');
         }
 
+        return sprintf('/%s', $url);
+    }
+
+    /**
+     * Generate a absolute URL to the given path.
+     *
+     * @param  string  $uri (default empty.)
+     * @return URL
+     */
+    public function siteUrl($uri = '')
+    {
+        $url = $this->performUrl($uri);
+
         if ($uri != '') {
-            $url = $this->parseUrl($url . '/' . $uri);
+            $url = sprintf('%s/%s', $url, $this->parseUrl($uri));
         }
 
-        return '/' . $url;
+        return $url;
     }
 
-
+    /**
+     * Generate a URL to an application asset.
+     *
+     * @param  string  $uri (default empty.)
+     * @return URL to an asset
+     */
     public function baseUrl($uri = '')
     {
-        $baseUrl = $this->performUrl();
-        $urlPath = str_replace(self::FRONT_CONTROLLER_NAME, '', $baseUrl);
-        return rtrim($urlPath, '/') . '/' . $uri;
+        $replace = self::FRONT_CONTROLLER_NAME;
+        $baseUrl = str_replace($replace, '', $this->performUrl());
+        return sprintf('%s/%s', rtrim($baseUrl, '/'), trim($uri, '/'));
     }
-
 
     // end class...
 }

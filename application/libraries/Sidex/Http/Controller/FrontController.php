@@ -5,7 +5,7 @@ use \Sidex\Http\Controller\FrontControllerInterface as FrontControllerInterface;
 
 class FrontController implements FrontControllerInterface {
 
-    const DEFAULT_CONTROLLER = 'IndexController';
+    const DEFAULT_CONTROLLER = 'BaseController';
     const DEFAULT_ACTION     = 'index';
 
     private $controller    = self::DEFAULT_CONTROLLER;

@@ -10,13 +10,18 @@
  */
 
 
+// ----------------------------------------------------------------------------
+// PATHS:
+// ----------------------------------------------------------------------------
+
+
 if (! function_exists('build_path')) {
 
     /**
      * Builds a file path with the appropriate directory separator.
      *
      * @access public
-     * @param  string
+     * @param  string $path (default empty string.)
      * @return string Path
      */
     function build_path($path = '')
@@ -37,7 +42,7 @@ if (! function_exists('application_path')) {
      * index.php (front controller) with the appropriate directory separator.
      *
      * @access public
-     * @param  string
+     * @param  string $path (default empty string.)
      * @return string Path
      */
     function application_path($path = '')
@@ -45,6 +50,11 @@ if (! function_exists('application_path')) {
         return build_path(APPATH, $path);
     }
 }
+
+
+// ----------------------------------------------------------------------------
+// DEBUGGING:
+// ----------------------------------------------------------------------------
 
 
 if (! function_exists('debug')) {
@@ -99,14 +109,19 @@ if (! function_exists('vdump')) {
 }
 
 
+// ----------------------------------------------------------------------------
+// URL's
+// ----------------------------------------------------------------------------
+
+
 if (! function_exists('request_uri')) {
 
     /**
-     * Retrieves a uniform resource identifier or URI (including segments) of
-     * an request made to the server.
+     * Returns the URI which was given in order to access to any page from
+     * the application.
      *
      * @access public
-     * @return string
+     * @return string (the requested URI.)
      */
     function request_uri()
     {
@@ -119,34 +134,34 @@ if (! function_exists('request_uri')) {
 if (! function_exists('site_url')) {
 
     /**
-     * Generates a Uniform Resource Locator or URL with additional parameters to
-     * make a request to the server.
+     * Generate a absolute URL to the given path.
      *
      * @access public
-     * @param  string
-     * @return string
+     * @param  string  $uri (default empty.)
+     * @return URL
      */
     function site_url($uri = '')
     {
         $url = new \Sidex\Http\Request\Url;
-        return $url->performUrl($uri);
+        return $url->siteUrl($uri);
     }
 }
 
 
 if (! function_exists('base_url')) {
 
-	/**
-	 * Generates a Uniform Resource Locator or URL.
-	 *
-	 * @access public
-	 * @return string
-	 */
-	function base_url($uri = '')
-	{
-		$url = new \Sidex\Http\Request\Url;
-		return $url->baseUrl($uri);
-	}
+    /**
+     * Generate a URL to an application asset.
+     *
+     * @access public
+     * @param  string  $uri (default empty.)
+     * @return URL to an asset
+     */
+    function base_url($uri = '')
+    {
+        $url = new \Sidex\Http\Request\Url;
+        return $url->baseUrl($uri);
+    }
 }
 
 

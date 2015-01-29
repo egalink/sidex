@@ -2,7 +2,7 @@
 
 use \Sidex\Http\Response\View as View;
 
-class IndexController {
+class BaseController {
 
     /**
      * Class constructor.
@@ -22,8 +22,8 @@ class IndexController {
     public function index()
     {
         $view = new View();
-        $view->make('IndexController/index')
-             ->with('title', 'Jakim says..')
+        $view->make('BaseController/index')
+             ->with('title', 'Sidex says..')
              ->with('message', 'Hi Welcome to Sidex Framework!');
         // and more code here...
         $view->render();
@@ -31,5 +31,5 @@ class IndexController {
 
 }
 
-/* End of file IndexController.php */
-/* Location: ./(<application folder>/)controllers/IndexController.php */
+/* End of file BaseController.php */
+/* Location: ./(<application folder>/)controllers/BaseController.php */

@@ -6,7 +6,7 @@
  * ----------------------------------------------------------------------------
  *
  * @package  Sidex
- * @version  0.0.5
+ * @version  1.0.0
  * @author   Edgar Jakim Hernández Arrieta  <egalink@gmail.com>
  *
  */
