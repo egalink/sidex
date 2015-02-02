@@ -19,10 +19,11 @@ class BaseController {
      */
     public function index()
     {
-        $view = new View;
-        $view->make('BaseController/index')
-             ->with('title', 'Sidex Framework')
-             ->with('message', 'Hi Welcome to Sidex Framework!');
+        $view = new View('BaseController/index', [
+            'title'     => 'Sidex Framework',
+            'greeting'  => 'Hi Welcome to Sidex Framework!',
+        ]);
+
         // and more code here...
         $view->render();
     }
