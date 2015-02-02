@@ -28,7 +28,12 @@ class View {
         }
     }
 
-
+    /**
+     * Take the name of a view file for display to the user.
+     *
+     * @param  string  $view (empty string.)
+     * @return Sidex\Http\Response\View Object
+     */
     public function make($view = '')
     {
         if (is_string($view) and $view != '') {
@@ -38,7 +43,13 @@ class View {
         return $this;
     }
 
-
+    /**
+     * Add a piece of data to the view.
+     *
+     * @param  string  $name  (the variable name.)
+     * @param  mixed   $value (default null.)
+     * @return Sidex\Http\Response\View Object
+     */
     public function with($name = '', $value = null)
     {
         if ($name != '') {
@@ -48,7 +59,12 @@ class View {
         return $this;
     }
 
-
+    /**
+     * Get the evaluated view contents for the given view.
+     *
+     * @param  boolean $output
+     * @return mixed
+     */
     public function render($output = true)
     {
         if (! $this->viewFile) {
@@ -64,7 +80,12 @@ class View {
         echo $buffer;
     }
 
-
+    /**
+     * Get the view's rendering.
+     *
+     * @access private
+     * @return buffer (the rendered view.)
+     */
     private function content()
     {
         if (! empty($this->viewVars)) {
@@ -76,7 +97,13 @@ class View {
         return ob_get_clean();
     }
 
-
+    /**
+     * Add a view.
+     *
+     * @access private
+     * @param  string  $view (the view name.)
+     * @return void
+     */
     private function setView($view = '')
     {
         $viewPath = sprintf("%s/%s.php", APPATH . $this->viewPath, $view);
@@ -88,14 +115,19 @@ class View {
         }
     }
 
-
+    /**
+     * Builds a file path with the appropriate directory separator.
+     *
+     * @access private
+     * @param  string  $path
+     * @return file path
+     */
     private function buildpath($path = '')
     {
         $path = str_replace('\\','/', $path);
         $path = preg_replace('/\/+/', '/', $path);
         return $path;
     }
-
 
     // end class...
 }
