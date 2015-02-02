@@ -8,11 +8,35 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <meta name="description" content="<?php echo $title;?>">
         <link href="<?php echo base_url('favicon.ico')?>" rel="shortcut icon">
-        <link href="//necolas.github.io/normalize.css/3.0.2/normalize.css" rel="stylesheet">
+        <style type="text/css">
+            * {
+                margin: 0px;
+                padding: 0px;
+            }
+
+            body {
+                height: 100%;
+                text-align: center;
+            }
+
+            h1 {
+                color: #38D;
+                display: block;
+                font-family: sans-serif;
+                font-size: 2em;
+                margin: -58px auto 0px auto;
+                top: 50%;
+            }
+
+            body, h1 {
+                position: absolute;
+                width: 100%;
+            }
+        </style>
     </head>
 
     <body>
-        <h1 align="center"><?php echo $message;?></h1>
+        <h1 align="center"><?php echo $greeting;?></h1>
     </body>
 
 </html>
