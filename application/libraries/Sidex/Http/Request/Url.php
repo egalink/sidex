@@ -23,7 +23,7 @@ class Url implements UrlInterface {
     private $regexp = '/[^a-zA-Z0-9_.]/';
 
     /**
-     * Url class constructor.
+     * Class constructor.
      *
      * @return void
      */

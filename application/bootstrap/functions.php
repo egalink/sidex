@@ -18,11 +18,11 @@
 if (! function_exists('build_path')) {
 
     /**
-     * Builds a file path with the appropriate directory separator.
+     * Makes a correct formatted file path with DIRECTORY_SEPARATOR.
      *
      * @access public
      * @param  string $path (default empty string.)
-     * @return string Path
+     * @return string path
      */
     function build_path($path = '')
     {
@@ -30,7 +30,9 @@ if (! function_exists('build_path')) {
             $path = join('/', func_get_args());
         }
 
-        return preg_replace('/\/+/', '/', str_replace('\\', '/', $path));
+        $path = str_replace('\\','/', $path);
+        $path = preg_replace('/\/+/', DIRECTORY_SEPARATOR, $path);
+        return $path;
     }
 }
 
@@ -43,7 +45,7 @@ if (! function_exists('application_path')) {
      *
      * @access public
      * @param  string $path (default empty string.)
-     * @return string Path
+     * @return string path
      */
     function application_path($path = '')
     {

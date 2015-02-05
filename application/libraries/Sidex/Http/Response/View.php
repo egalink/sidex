@@ -116,17 +116,15 @@ class View {
     }
 
     /**
-     * Builds a file path with the appropriate directory separator.
+     * Makes a correct formatted file path with DIRECTORY_SEPARATOR.
      *
      * @access private
-     * @param  string  $path
-     * @return file path
+     * @param  string $path (default empty string.)
+     * @return string path
      */
     private function buildpath($path = '')
     {
-        $path = str_replace('\\','/', $path);
-        $path = preg_replace('/\/+/', '/', $path);
-        return $path;
+        return build_path($path);
     }
 
     // end class...

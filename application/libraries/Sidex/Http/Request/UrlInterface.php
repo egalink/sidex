@@ -3,7 +3,7 @@
 interface UrlInterface {
 
     /**
-     * Url class constructor.
+     * Class constructor.
      *
      * @return void
      */
