@@ -116,10 +116,10 @@ class View {
     }
 
     /**
-     * Makes a correct formatted file path with DIRECTORY_SEPARATOR.
+     * Builds a file path with the appropriate directory separator.
      *
      * @access private
-     * @param  string $path (default empty string.)
+     * @param  string
      * @return string path
      */
     private function buildpath($path = '')

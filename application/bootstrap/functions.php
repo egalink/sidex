@@ -18,10 +18,10 @@
 if (! function_exists('build_path')) {
 
     /**
-     * Makes a correct formatted file path with DIRECTORY_SEPARATOR.
+     * Builds a file path with the appropriate directory separator.
      *
-     * @access public
-     * @param  string $path (default empty string.)
+     * @access private
+     * @param  string
      * @return string path
      */
     function build_path($path = '')
