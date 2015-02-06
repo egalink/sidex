@@ -3,3 +3,21 @@
 /application/vendor
 .DS_Store
 Thumbs.db
+
+# -----------------------------------------------------------------------------
+# For Testing Branch:
+# -----------------------------------------------------------------------------
+
+# Ignore all controllers, except BaseController.php:
+/application/controllers
+! /application/controllers/BaseController.php
+
+# Ignore all models:
+/application/models
+
+# Ignore all view files, except in BaseController folder:
+/application/views
+! /application/views/BaseController
+
+# Ignore the styles folder in public:
+/public/styles
