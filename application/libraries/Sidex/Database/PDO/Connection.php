@@ -4,22 +4,21 @@ use Exception,
     InvalidArgumentException,
     Sidex\Database\PDO\Connectors\MySqlConnector;
 
-class Connector {
+class Connection {
 
     /**
      * A simple PDO connection instance.
      *
      * @var PDO Object
      */
-    public $db;
+    public $pdo;
 
     /**
      * Establish a database connection.
      *
-     * @return void
      * @throws Exception
      */
-    public function __construct()
+    public function run()
     {
         $config = require $this->buildpath(APPATH . 'config/database.php');
 
@@ -27,7 +26,7 @@ class Connector {
             throw new Exception ("You may specify a database connection.");
         }
 
-        $this->db = $this->make($config);
+        $this->pdo = $this->make($config);
     }
 
     /**
@@ -44,8 +43,8 @@ class Connector {
             throw new InvalidArgumentException("A driver must be specified.");
         }
 
-        $PDOob = $this->createConnection($config['driver'])->connect($config);
-        return $PDOob;
+        $pdo = $this->createConnection($config['driver'])->connect($config);
+        return $pdo;
     }
 
 
@@ -95,5 +94,5 @@ class Connector {
     // end class...
 }
 
-/* End of file Connector.php */
-/* Location: ./(<application folder>/libraries/<namespace>)/Connector.php */
+/* End of file Connection.php */
+/* Location: ./(<application folder>/libraries/<namespace>)/Connection.php */

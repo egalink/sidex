@@ -12,7 +12,7 @@ class MySqlConnector implements ConnectorInterface {
     public $pdo;
 
     /**
-     * Establish a database connection.
+     * Establish a database connection with PDO.
      *
      * @param  array
      * @return PDO Object

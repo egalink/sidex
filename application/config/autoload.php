@@ -15,8 +15,8 @@ return array(
 
     'aliases' => array(
 
+        'Model'         => '\Sidex\Database\ORM\Model',
         'View'          => '\Sidex\Http\Response\View',
-        'Connector'     => '\Sidex\Database\PDO\Connector',
 
     ),
 
