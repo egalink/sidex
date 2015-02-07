@@ -4,15 +4,17 @@ use PDO;
 
 class MySqlConnector implements ConnectorInterface {
 
+
     /**
      * A simple PDO connection instance.
      *
      * @var PDO Object
      */
-    public $pdo;
+    private $pdo;
+
 
     /**
-     * Establish a database connection with PDO.
+     * Create a new database connection instance with PDO.
      *
      * @param  array
      * @return PDO Object
@@ -28,6 +30,7 @@ class MySqlConnector implements ConnectorInterface {
 
         return $this->pdo;
     }
+
 
     // end class...
 }

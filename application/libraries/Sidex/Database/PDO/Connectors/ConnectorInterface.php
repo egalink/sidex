@@ -3,7 +3,7 @@
 interface ConnectorInterface {
 
     /**
-     * Establish a database connection.
+     * Establish a database connection with PDO.
      *
      * @param  array
      * @return PDO Object
@@ -11,7 +11,6 @@ interface ConnectorInterface {
     public function connect(array $config);
 
     // end interface...
-
 }
 
 /* End of file ConnectorInterface.php */
