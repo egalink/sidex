@@ -1,14 +1,6 @@
 <?php namespace Sidex\Database\PDO;
 
-interface ConnectionInterface {
-
-
-    /**
-     * Establish a database connection.
-     *
-     * @throws Exception
-     */
-    public function run();
+interface QueryBuilderInterface {
 
 
     /**
@@ -105,5 +97,5 @@ interface ConnectionInterface {
     // end interface...
 }
 
-/* End of file ConnectionInterface.php */
-/* Location: ./(<application folder>/libraries/<namespace>)/ConnectionInterface.php */
+/* End of file QueryBuilderInterface.php */
+/* Location: ./(<application folder>/libraries/<namespace>)/QueryBuilderInterface.php */

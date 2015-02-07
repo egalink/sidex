@@ -1,8 +1,8 @@
 <?php namespace Sidex\Database\ORM;
 
-use \Sidex\Database\PDO\Connection;
+use \Sidex\Database\PDO\QueryBuilder;
 
-class Model extends Connection {
+class Model extends QueryBuilder {
 
 
     /**
@@ -20,7 +20,7 @@ class Model extends Connection {
      */
     public function __construct()
     {
-        $this->run();
+        parent::__construct();
     }
 
 
