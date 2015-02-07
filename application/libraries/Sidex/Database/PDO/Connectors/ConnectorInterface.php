@@ -2,6 +2,7 @@
 
 interface ConnectorInterface {
 
+
     /**
      * Establish a database connection with PDO.
      *
@@ -9,6 +10,7 @@ interface ConnectorInterface {
      * @return PDO Object
      */
     public function connect(array $config);
+
 
     // end interface...
 }

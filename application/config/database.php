@@ -5,21 +5,23 @@ $database = array();
 
 $database['mysql'] = array(
 
-    'dsn'       => "mysql:host=localhost;dbname=eventos",
+    'dsn'       => "mysql:host=localhost;dbname=proveedores",
     'username'  => "root",
     'password'  => "mysqlroot",
 
     'queryes'   => array(
-        "SET names 'utf8' COLLATE 'utf8_unicode_ci';",
+        "SET SESSION sql_mode = 'STRICT_ALL_TABLES';",
+        "SET names 'utf8' COLLATE 'utf8_general_ci';",
         "SET lc_time_names = 'es_ES';",
     ),
 
     'options'   => array(
-        PDO::ATTR_CASE              => PDO::CASE_NATURAL,
-        PDO::ATTR_ERRMODE           => PDO::ERRMODE_EXCEPTION,
-        PDO::ATTR_ORACLE_NULLS      => PDO::NULL_NATURAL,
-        PDO::ATTR_EMULATE_PREPARES  => false,
-        PDO::ATTR_STRINGIFY_FETCHES => false,
+        PDO::ATTR_CASE                  => PDO::CASE_NATURAL,
+        PDO::ATTR_ERRMODE               => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_ORACLE_NULLS          => PDO::NULL_NATURAL,
+        PDO::ATTR_DEFAULT_FETCH_MODE    => PDO::FETCH_OBJ,
+        PDO::ATTR_EMULATE_PREPARES      => false,
+        PDO::ATTR_STRINGIFY_FETCHES     => false,
     ),
 
     'driver' => 'mysql',
