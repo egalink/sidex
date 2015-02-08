@@ -94,6 +94,14 @@ interface QueryBuilderInterface {
     public function order($column, $direction = 'asc');
 
 
+    /**
+     * Execute the query as a "select" statement.
+     *
+     * @return array | boolean false
+     */
+    public function all();
+
+
     // end interface...
 }
 
