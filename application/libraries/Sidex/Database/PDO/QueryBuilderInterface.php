@@ -143,6 +143,23 @@ interface QueryBuilderInterface {
     public function orderDesc($column);
 
 
+    /**
+     * Set the "limit" value of the query.
+     *
+     * @param  integer  $value
+     * @return $this
+     */
+    public function limit($value);
+
+
+    /**
+     * Execute the query as a "select" statement.
+     *
+     * @return array
+     */
+    public function get();
+
+
     // end interface...
 }
 

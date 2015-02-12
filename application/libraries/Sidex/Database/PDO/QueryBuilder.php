@@ -1,6 +1,6 @@
 <?php namespace Sidex\Database\PDO;
 
-use InvalidArgumentException;
+use Sidex\Database\PDO\Builder;
 use Sidex\Database\PDO\Connection;
 use Sidex\Database\PDO\QueryBuilderInterface;
 
@@ -13,6 +13,14 @@ class QueryBuilder implements QueryBuilderInterface {
      * @var PDO Object
      */
     public $db;
+
+
+    /**
+     * The Builder class instance.
+     *
+     * @var PDO Object
+     */
+    public $builder;
 
 
     /**
@@ -80,6 +88,14 @@ class QueryBuilder implements QueryBuilderInterface {
 
 
     /**
+     * The maximum number of records to return.
+     *
+     * @var int
+     */
+    public $limit;
+
+
+    /**
      * Establish a database connection.
      *
      * @access public
@@ -89,6 +105,8 @@ class QueryBuilder implements QueryBuilderInterface {
         $connection = new Connection;
         $connection->run();
         $this->db = $connection->pdo;
+
+        $this->builder = new Builder;
     }
 
 
@@ -217,8 +235,6 @@ class QueryBuilder implements QueryBuilderInterface {
      * @param  mixed   $value
      * @param  string  $boolean
      * @return $this
-     *
-     * @throws \InvalidArgumentException
      */
     public function where($column, $operator = null, $value = null, $boolean = 'and')
     {
@@ -332,6 +348,31 @@ class QueryBuilder implements QueryBuilderInterface {
         }
 
         return $this;
+    }
+
+
+    /**
+     * Set the "limit" value of the query.
+     *
+     * @param  int  $value
+     * @return $this
+     */
+    public function limit($value)
+    {
+        $this->limit = $value;
+        return $this;
+    }
+
+
+    /**
+     * Execute the query as a "select" statement.
+     *
+     * @return array
+     */
+    public function get()
+    {
+        $query = $this->builder->buildQuery($this);
+        debug($this);exit;
     }
 
 
