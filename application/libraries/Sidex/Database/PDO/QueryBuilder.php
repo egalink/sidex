@@ -1,5 +1,6 @@
 <?php namespace Sidex\Database\PDO;
 
+use InvalidArgumentException;
 use Sidex\Database\PDO\Connection;
 use Sidex\Database\PDO\QueryBuilderInterface;
 
@@ -15,51 +16,67 @@ class QueryBuilder implements QueryBuilderInterface {
 
 
     /**
-     * Saves the table name which the query is targeting.
+     * The current query statement.
      *
      * @var string
      */
-    public $table = null;
+    public $current;
 
 
     /**
-     * Performed query Query statement.
+     * The current query value bindings.
+     *
+     * @var array
+     */
+    public $bindings = array();
+
+
+    /**
+     * The columns that should be returned.
      *
      * @var string
      */
-    private $query = '';
+    public $columns;
 
 
     /**
-     * Array of blindings.
+     * Indicates if the query returns distinct results.
      *
-     * @var array
+     * @var bool
      */
-    private $binds = array();
+    public $distinct = false;
 
 
     /**
-     * Array of joins clauses for the query.
+     * The table which the query is targeting.
      *
-     * @var array
+     * @var string
      */
-    private $joins = array();
+    public $table;
 
 
     /**
-     * Array of where clauses for the query.
+     * The table joins for the query.
      *
      * @var array
      */
-    private $where = array();
+    public $joins;
 
 
     /**
-     * Array of "order by" clause for the query.
+     * The where constraints for the query.
      *
      * @var array
      */
-    private $order = array();
+    public $wheres;
+
+
+    /**
+     * The orderings for the query.
+     *
+     * @var array
+     */
+    public $orders;
 
 
     /**
@@ -76,25 +93,34 @@ class QueryBuilder implements QueryBuilderInterface {
 
 
     /**
-     * Create a select statement for the database.
+     * Set the columns to be selected.
      *
-     * @param  string | mixed.
-     * @return Object
+     * @param  mixed  $columns
+     * @return $this
      */
-    public function select($query = '*')
+    public function select($columns = '*')
     {
-        $this->query = "SELECT ";
+        if (func_num_args() > 1)
+            $columns = func_get_args();
 
-        if (func_num_args() > 1) {
-            $query = func_get_args();
-        }
+        if (is_array($columns))
+            $columns = join(', ', $columns);
 
-        if (! is_string($query)) {
-            $query = join(', ', $query);
-        }
+        $this->current = 'SELECT';
+        $this->columns = $columns;
 
-        $this->query.= trim($query);
+        return $this;
+    }
 
+
+    /**
+     * Force the query to only return distinct results.
+     *
+     * @return $this
+     */
+    public function distinct()
+    {
+        $this->distinct = true;
         return $this;
     }
 
@@ -102,44 +128,18 @@ class QueryBuilder implements QueryBuilderInterface {
     /**
      * Set the table which the query is targeting.
      *
-     * @param  string
-     * @return Object
+     * @param  mixed  $table
+     * @return $this
      */
-    public function table($table = null)
+    public function from($table)
     {
-        if (func_num_args() > 1) {
+        if (func_num_args() > 1)
             $table = func_get_args();
-        }
 
-        if (! is_string($table)) {
+        if (is_array($table))
             $table = join(', ', $table);
-        }
 
-        $this->table = trim($table);
-
-        return $this;
-    }
-
-
-    /**
-     * Add a basic where clause to the query.
-     *
-     * @param string  $column
-     * @param string  $operator
-     * @param mixed   $value
-     * @param mixed   $value
-     * @param string  $boolean
-     * @param mixed
-     * @return Object
-     */
-    public function where($column, $operator = null, $value = null, $boolean = 'and')
-    {
-        if (! is_null($value)) {
-            $boolean = ! empty($boolean) ? strtoupper($boolean) : 'AND';
-            $this->where[] = trim("{$boolean} {$column} {$operator} ?");
-            $this->binds[] = $value;
-        }
-
+        $this->table = $table;
         return $this;
     }
 
@@ -147,167 +147,191 @@ class QueryBuilder implements QueryBuilderInterface {
     /**
      * Add a join clause to the query.
      *
-     * @param string  $table
-     * @param string  $one
-     * @param string  $operator
-     * @param string  $two
-     * @param string  $type
-     * @return Object
+     * @param  string  $table
+     * @param  string  $one
+     * @param  string  $operator
+     * @param  string  $two
+     * @param  string  $type
+     * @param  bool    $where
+     * @return $this
      */
-    public function join($table, $one, $operator = null, $two = null, $type = 'inner')
+    public function join($table, $one, $operator = null, $two = null, $type = '')
     {
-        $type = ! empty($type) ? strtoupper($type) : 'INNER';
-        $join = trim("{$type} JOIN {$table} ON {$one} {$operator} {$two}");
-        $this->joins[] = $join;
+        $join = count($this->joins);
+        $this->joins[$join] = ltrim(strtoupper($type) . ' JOIN ');
+        $this->joins[$join].= rtrim("{$table} ON {$one} {$operator} {$two}");
         return $this;
     }
 
 
     /**
-     * Add a inner join clause to the query.
+     * Add a inner join to the query.
      *
-     * @param string  $table
-     * @param string  $one
-     * @param string  $operator
-     * @param string  $two
-     * @return Object
+     * @param  string  $table
+     * @param  string  $one
+     * @param  string  $operator
+     * @param  string  $two
+     * @return $this
      */
-    public function ijoin($table, $one, $operator = null, $two = null)
+    public function innerJoin($table, $one, $operator = null, $two = null)
     {
         return $this->join($table, $one, $operator, $two, 'inner');
     }
 
 
     /**
-     * Add a left join clause to the query.
+     * Add a left join to the query.
      *
-     * @param string  $table
-     * @param string  $one
-     * @param string  $operator
-     * @param string  $two
-     * @return Object
+     * @param  string  $table
+     * @param  string  $one
+     * @param  string  $operator
+     * @param  string  $two
+     * @return $this
      */
-    public function ljoin($table, $one, $operator = null, $two = null)
+    public function leftJoin($table, $one, $operator = null, $two = null)
     {
         return $this->join($table, $one, $operator, $two, 'left');
     }
 
 
     /**
-     * Add a right join clause to the query.
+     * Add a right join to the query.
      *
-     * @param string  $table
-     * @param string  $one
-     * @param string  $operator
-     * @param string  $two
-     * @return Object
+     * @param  string  $table
+     * @param  string  $one
+     * @param  string  $operator
+     * @param  string  $two
+     * @return $this
      */
-    public function rjoin($table, $one, $operator = null, $two = null)
+    public function rightJoin($table, $one, $operator = null, $two = null)
     {
         return $this->join($table, $one, $operator, $two, 'right');
     }
 
 
     /**
-     * Add an "order by" clause to the query.
+     * Add a basic where clause to the query.
      *
-     * @param  string $column
-     * @param  string $direction
-     * @return Object
+     * @param  mixed   $column
+     * @param  string  $operator
+     * @param  mixed   $value
+     * @param  string  $boolean
+     * @return $this
+     *
+     * @throws \InvalidArgumentException
      */
-    public function order($column, $direction = 'asc')
+    public function where($column, $operator = null, $value = null, $boolean = 'and')
     {
-        $direction = strtoupper($direction);
-        $this->order[] = trim("{$column} {$direction}");
+        $where = count($this->wheres);
+
+        if (is_array($column)) {
+            $this->whereArray($column);
+        } else {
+
+            $this->wheres[$where] = strtoupper($boolean) . ' ';
+            $this->wheres[$where].= $column . ' ';
+            $this->wheres[$where].= is_string($operator) ? "{$operator} ?" : '?';
+            $this->bind($value);
+        }
+
         return $this;
     }
 
 
     /**
-     * Execute the query as a "select" statement.
+     * Add a clause 'where' to the query from an array of data.
      *
-     * @return array | boolean false
+     * @param  array   $columns
+     * @param  string  $boolean
+     * @return $this
      */
-    public function all()
+    public function whereArray(array $columns = array(), $boolean = 'and')
     {
-        $query = $this->buildQuery('select');
-
-        if (is_string($query) === false) {
-            return false;
+        foreach($columns as $column => $value) {
+            $this->where($column, '=', $value, $boolean);
         }
 
-        $sth = $this->db->prepare($query);
-        return $sth->execute($this->binds) ? $sth->fetchAll() : false;
+        return $this;
     }
 
 
     /**
-     * Build a query based on the pieces necessary to perform the statement.
+     * Add a binding to the query.
      *
-     * SELECT
-     * INSERT
-     * UPDATE
-     * DELETE
-     *
-     * @access private
-     * @param  string  $statement
-     * @return mixed
+     * @param  mixed   $value
+     * @param  string  $parameter
+     * @return $this
      */
-    private function buildQuery($statement = '')
+    public function bind($value, $parameter = null)
     {
-        switch($statement) {
-
-            case 'select':
-                return $this->selectStatement();
-
-            case 'insert':
-                break;
-
-            case 'update':
-                break;
-
-            case 'delete':
-                break;
-
-            default:
-                return false;
+        if (is_null($parameter)) {
+            $this->bindings[] = $value;
+        } else {
+            $this->bindings[$parameter] = $value;
         }
 
+        return $this;
     }
 
 
     /**
-     * Build a 'select' statement.
+     * Add an "order by" clause to the query.
      *
-     * @access private
-     * @return string  (select statement.)
+     * @param  string  $column
+     * @param  string  $direction
+     * @return $this
      */
-    private function selectStatement()
+    public function order($column, $direction = 'asc')
     {
+        $direction = strtoupper($direction);
+        $this->orders[] = "{$column} {$direction}";
+        return $this;
+    }
 
-        if (is_string($this->table) === true) {
-            $this->query.= " FROM {$this->table}";
-            $this->table = null;
+
+    /**
+     * Add an "order by asc" clause to the query.
+     *
+     * @param  mixed   $column
+     * @param  string  $direction
+     * @return $this
+     */
+    public function orderAsc($column)
+    {
+        if (func_num_args() > 1) {
+
+            foreach(func_get_args() as $column) {
+                $this->order($column, 'asc');
+            }
+
+        } else {
+            $this->order($column, 'asc');
         }
 
-        if (! empty($this->joins)) {
-            $this->query.= ' ' . join(' ', $this->joins);
-            $this->joins = array();
+        return $this;
+    }
+
+
+    /**
+     * Add an "order by desc" clause to the query.
+     *
+     * @param  mixed   $column
+     * @param  string  $direction
+     * @return $this
+     */
+    public function orderDesc($column)
+    {
+        if (func_num_args() > 1) {
+
+            foreach(func_get_args() as $column) {
+                $this->order($column, 'desc');
+            }
+
+        } else {
+            $this->order($column, 'desc');
         }
 
-        if (! empty($this->where)) {
-            $where = join(' ', $this->where);
-            $where = preg_replace('/^AND|OR|IN|NOT IN/i', ' WHERE', $where);
-            $this->query.= $where;
-            $this->where = array();
-        }
-
-        if (! empty($this->order)) {
-            $this->query.= ' ORDER BY ' . join(', ', $this->order);
-            $this->order = array();
-        }
-
-        return $this->query.= ';';
+        return $this;
     }
 
 
