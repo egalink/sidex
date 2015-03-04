@@ -1,0 +1,9 @@
+{
+    "name": "sidex/framework",
+    "homepage": "https://github.com/egalink/sidex",
+    "description": "Sidex php framework, the little son of PHP developers.",
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.36"
+    }
+}

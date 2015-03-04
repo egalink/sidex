@@ -14,83 +14,29 @@
  *
  */
 
-if (file_exists($composerAutoload = APPATH . 'vendor/autoload.php')) {
-    require $composerAutoload;
+if (file_exists($composerAutoloader = APPATH . 'vendor/autoload.php')) {
+        require $composerAutoloader;
 }
 
 
 /*
  * ----------------------------------------------------------------------------
- * THE SIDEX AUTO LOADER
+ * THE SIDEX CLASS LOADER
  * ----------------------------------------------------------------------------
  *
- * We register an auto-loader "behind" the Composer loader that can load classes
- * on the fly, even if the autoload files have not been regenerated for the
- * application. We'll add it to the stack here.
- *
- * ----------------------------------------------------------------------------
- *
- * The following describes the mandatory requirements that must be adhered to
- * for autoloader interoperability:
- *
- * 1.- A fully-qualified namespace and class must have the following structure:
- *     \<Vendor Name>\(<Namespace>\)*<Class Name>
- *
- * 2.- Each namespace must have a top-level namespace ("Vendor Name").
- *
- * 3.- Each namespace can have as many sub-namespaces as it wishes.
- *
- * 4.- Each namespace separator is converted to a DIRECTORY_SEPARATOR when
- *     loading from the file system.
- *
- * 5.- Each _ character in the CLASS NAME is converted to a DIRECTORY_SEPARATOR.
- *     The _ character has no special meaning in the namespace.
- *
- * 6.- The fully-qualified namespace and class is suffixed with .php when
- *     loading from the file system.
- *
- * 7.- Alphabetic characters in vendor names, namespaces, and class names may be
- *     of any combination of lower case and upper case.
+ * We register an auto-loader "behind" the Composer loader that can load
+ * classes on the fly, even if the composer autoload files have not been
+ * regenerated for the application. We'll add it to the stack here.
  *
  * ----------------------------------------------------------------------------
  * For more information: http://www.php-fig.org/psr/psr-0
  *
  */
 
-spl_autoload_register(function($className)
-{
-    $autoloadConfig = require application_path('config/autoload.php');
+require APPATH . 'libraries/ClassLoader.php';
+$ClassLoader = new \Sidex\ClassLoader(require APPATH . 'config/autoload.php');
+$ClassLoader->register();
 
-    // implementing the lazy class loading:
-    if (in_array($className, array_keys($autoloadConfig['aliases'])) === true) {
-        $alias = array_flip([$className]);
-        $class = array_intersect_key($autoloadConfig['aliases'], $alias);
-        return class_alias($class[$className], $className);
-    }
-
-    $className = ltrim($className, '\\');
-    $fileName  = '';
-    $namespace = '';
-    $separator = DIRECTORY_SEPARATOR;
-
-    if ($lastNsPos = strrpos($className, '\\')) {
-        $namespace = substr($className, 0, $lastNsPos);
-        $className = substr($className, $lastNsPos +1);
-        $fileName  = str_replace('\\', $separator, $namespace) . $separator;
-    }
-
-    $fileName .= str_replace('_', $separator, $className) . '.php';
-
-    foreach ($autoloadConfig['paths'] as $path) {
-        $realPath = build_path($path, $fileName);
-        if (is_file($realPath) === true) {
-            $fileName = $realPath;
-        }
-    }
-
-    require_once $fileName;
-});
 
 /* End of file autoload.php */
 /* Location: ./(<application folder>/)bootstrap/autoload.php */
-

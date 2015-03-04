@@ -3,6 +3,7 @@
 /application/vendor
 .DS_Store
 Thumbs.db
+sidex-framework.geany
 
 # -----------------------------------------------------------------------------
 # For Testing Branch:
@@ -19,5 +20,8 @@ Thumbs.db
 /application/views
 ! /application/views/BaseController
 
-# Ignore the styles folder in public:
-/public/styles
+# Ignore all files in public folder, except .htaccess, index.php, favicon.ico:
+/public
+! /public/.htaccess
+! /public/index.php
+! /public/favicon.ico

@@ -15,7 +15,7 @@ require __DIR__ . '/functions.php';
 
 /*
  *-----------------------------------------------------------------------------
- * TURN ON THE LIGHTS
+ * REGISTER THE SIDEX AUTO LOADER
  *-----------------------------------------------------------------------------
  *
  * Sidex provides a convenient automatically class loader for our
@@ -31,7 +31,7 @@ require __DIR__ . '/autoload.php';
 
 /*
  * ----------------------------------------------------------------------------
- * INITIALIZE THE FRONT CONTROLLER
+ * TURN ON THE LIGHTS
  * ----------------------------------------------------------------------------
  *
  * The front controller is responsible for receiving all requests that the user
@@ -42,7 +42,7 @@ require __DIR__ . '/autoload.php';
  *
  */
 
-$sidexConfigFile = require application_path('config/sidex.php');
+$sidexConfigFile = require APPATH . 'config/sidex.php';
 $frontController = new \Sidex\Http\Controller\FrontController($sidexConfigFile);
 
 

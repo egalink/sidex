@@ -1,6 +1,5 @@
 <?php namespace Sidex\Database\PDO;
 
-use Sidex\Database\PDO\Builder;
 use Sidex\Database\PDO\Connection;
 use Sidex\Database\PDO\QueryBuilderInterface;
 
@@ -16,11 +15,11 @@ class QueryBuilder implements QueryBuilderInterface {
 
 
     /**
-     * The Builder class instance.
+     * The "raw" expression from the query.
      *
-     * @var PDO Object
+     * @var string
      */
-    public $builder;
+    public $query = '';
 
 
     /**
@@ -105,8 +104,6 @@ class QueryBuilder implements QueryBuilderInterface {
         $connection = new Connection;
         $connection->run();
         $this->db = $connection->pdo;
-
-        $this->builder = new Builder;
     }
 
 
@@ -359,7 +356,7 @@ class QueryBuilder implements QueryBuilderInterface {
      */
     public function limit($value)
     {
-        $this->limit = $value;
+        $this->limit = (int) $value;
         return $this;
     }
 
@@ -371,8 +368,65 @@ class QueryBuilder implements QueryBuilderInterface {
      */
     public function get()
     {
-        $query = $this->builder->buildQuery($this);
+        $query = $this->buildQuery();
+        $sth = $this->db->prepare($query);
+        $sth->execute($this->bindings);
+        $sth->fetchAll();
         debug($this);exit;
+    }
+
+
+    // ------------------------------------------------------------------------
+    // PRIVATE METHODS --------------------------------------------------------
+    // ------------------------------------------------------------------------
+
+
+    /**
+     * Create a new query based on the "current" statement.
+     *
+     * @access private
+     * @return string
+     */
+    private function buildQuery()
+    {
+        switch($this->current) {
+
+            case 'SELECT':
+                return $this->buildSelectStatement();
+
+            default:
+                return null;
+        }
+    }
+
+
+    /**
+     * Build the query as a "select" statement.
+     *
+     * @access private
+     * @return string
+     */
+    private function buildSelectStatement()
+    {
+        $query = ($this->distinct == true)?
+            "SELECT DISTINCT {$this->columns} " : "SELECT {$this->columns} ";
+
+        $query.= "FROM {$this->table} ";
+
+        if (is_array($this->joins))
+            $query.= join(' ', $this->joins) . ' ';
+
+        if (is_array($this->wheres))
+            $query.= preg_replace('/^(and|or)/i', 'WHERE', join(' ', $this->wheres)) . ' ';
+
+        if (is_array($this->orders))
+            $query.= 'ORDER BY ' . join(', ', $this->orders) . ' ';
+
+        if (is_int($this->limit))
+            $query.= "LIMIT {$this->limit} ";
+
+        $this->query = preg_replace('/\s+/', ' ', trim($query)) . ';';
+        return $this->query;
     }
 
 
