@@ -33,14 +33,12 @@
  */
 class ClassLoader {
 
-
     /**
      * Indicates if a ClassLoader has been registered.
      *
      * @var bool
      */
     protected $registered = false;
-
 
     /**
      * The registered paths.
@@ -49,14 +47,12 @@ class ClassLoader {
      */
     protected $paths = array();
 
-
     /**
      * The array of class aliases.
      *
      * @var array
      */
     protected $aliases = array();
-
 
     /**
      * The class constructor.
@@ -67,38 +63,6 @@ class ClassLoader {
     {
         $this->configure($config);
     }
-
-
-    /**
-     * Configure the class loader.
-     *
-     * @param  array  $config
-     * @return $this
-     */
-    public function configure(array $config)
-    {
-        foreach($config as $key => $value) {
-            $this->setConfig($key, $value);
-        }
-
-        return $this;
-    }
-
-
-    /**
-     * Set a given configuration value.
-     *
-     * @param  string  $key
-     * @param  mixed   $value
-     * @return void
-     */
-    public function setConfig($key, $value = null)
-    {
-        if (isset($this->{$key}) and is_null($value) === false) {
-            $this->{$key} = $value;
-        }
-    }
-
 
     /**
      * Register the given class loader on the auto-loader stack.
@@ -111,7 +75,6 @@ class ClassLoader {
             $this->registered = spl_autoload_register(['\Sidex\ClassLoader', 'load']);
         }
     }
-
 
     /**
      * Load the given class file.
@@ -127,9 +90,9 @@ class ClassLoader {
 
         $fileName = $this->normalizeClass($className);
 
-        foreach ($this->paths as $path) {
-            $realPath = $this->buildpath($path, $fileName);
-            if (is_file($realPath) === true) {
+        foreach($this->paths as $path) {
+            if (is_file(
+                $realPath = $this->normalizePath($path, $fileName)) === true) {
                 $fileName = $realPath;
             }
         }
@@ -137,6 +100,35 @@ class ClassLoader {
         require_once $fileName;
     }
 
+    /**
+     * Configure the class loader.
+     *
+     * @access protected
+     * @param  array  $config
+     * @return $this
+     */
+    protected function configure(array $config)
+    {
+        foreach($config as $key => $value) {
+            $this->setConfig($key, $value);
+        }
+        return $this;
+    }
+
+    /**
+     * Set a given configuration value.
+     *
+     * @access protected
+     * @param  string  $key
+     * @param  mixed   $value
+     * @return void
+     */
+    protected function setConfig($key, $value = null)
+    {
+        if (isset($this->{$key}) === true) {
+            $this->{$key} = $value;
+        }
+    }
 
     /**
      * Implementing the lazy class loading.
@@ -157,7 +149,6 @@ class ClassLoader {
 
         return $isAlias;
     }
-
 
     /**
      * Get the normal file name for a class.
@@ -183,25 +174,23 @@ class ClassLoader {
         return $fileName;
     }
 
-
     /**
      * Builds a file path with the appropriate directory separator.
      *
-     * @access private
+     * @access protected
      * @param  string  $path
      * @return string
      */
-    protected function buildpath($path = '')
+    protected function normalizePath($path = '')
     {
         if (func_num_args() > 1) {
-            $path = join('/', func_get_args());
+            $path = implode('/', func_get_args());
         }
 
         $path = str_replace('\\','/', $path);
         $path = preg_replace('/\/+/', DIRECTORY_SEPARATOR, $path);
         return $path;
     }
-
 
     // end class...
 }

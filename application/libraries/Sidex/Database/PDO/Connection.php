@@ -22,7 +22,7 @@ class Connection {
      */
     public function run()
     {
-        $config = require $this->buildpath(APPATH . 'config/database.php');
+        $config = require $this->normalizePath(APPATH . 'config/database.php');
 
         if (empty($config) === true) {
             throw new Exception ("You may specify a database connection.");
@@ -90,9 +90,9 @@ class Connection {
      * @param  string
      * @return string path
      */
-    private function buildpath($path = '')
+    private function normalizePath($path = '')
     {
-        return build_path($path);
+        return normalize_path($path);
     }
 
 

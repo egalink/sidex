@@ -15,7 +15,7 @@
 // ----------------------------------------------------------------------------
 
 
-if (! function_exists('build_path')) {
+if (! function_exists('normalize_path')) {
 
     /**
      * Builds a file path with the appropriate directory separator.
@@ -24,7 +24,7 @@ if (! function_exists('build_path')) {
      * @param  string
      * @return string path
      */
-    function build_path($path = '')
+    function normalize_path($path = '')
     {
         if (func_num_args() > 1) {
             $path = join('/', func_get_args());
@@ -49,7 +49,7 @@ if (! function_exists('application_path')) {
      */
     function application_path($path = '')
     {
-        return build_path(APPATH, $path);
+        return normalize_path(APPATH, $path);
     }
 }
 
