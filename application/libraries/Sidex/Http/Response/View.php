@@ -107,7 +107,7 @@ class View {
     private function setView($view = '')
     {
         $viewPath = sprintf("%s/%s.php", APPATH . $this->viewPath, $view);
-        $viewFile = $this->buildpath($viewPath);
+        $viewFile = $this->normalizePath($viewPath);
         $this->viewFile = $viewFile;
 
         if (is_file($this->viewFile) === false) {
@@ -122,9 +122,9 @@ class View {
      * @param  string
      * @return string path
      */
-    private function buildpath($path = '')
+    private function normalizePath($path = '')
     {
-        return build_path($path);
+        return normalize_path($path);
     }
 
     // end class...
