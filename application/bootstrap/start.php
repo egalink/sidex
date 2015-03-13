@@ -34,16 +34,13 @@ require __DIR__ . '/autoload.php';
  * TURN ON THE LIGHTS
  * ----------------------------------------------------------------------------
  *
- * The front controller is responsible for receiving all requests that the user
- * sends to the application, processes the requests, makes a call to the
- * resources and generate results.
- *
- * For now, the front controller use the RESTful pattern.
+ * The first thing we will do is create a new Sidex application instance which
+ * serves as the "glue" for all the components of Sidex, and is the
+ * IoC container for the system binding all of the various parts.
  *
  */
 
-$sidexConfigFile = require APPATH . 'config/sidex.php';
-$frontController = new \Sidex\Http\Controller\FrontController($sidexConfigFile);
+$app = new \Sidex\Start\Framework\Application;
 
 
 /*
@@ -57,7 +54,7 @@ $frontController = new \Sidex\Http\Controller\FrontController($sidexConfigFile);
  *
  */
 
-$frontController->run();
+$app->run();
 
 
 /* End of file start.php */
