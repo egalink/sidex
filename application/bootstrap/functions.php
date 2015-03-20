@@ -27,7 +27,7 @@ if (! function_exists('normalize_path')) {
     function normalize_path($path = '')
     {
         if (func_num_args() > 1) {
-            $path = join('/', func_get_args());
+            $path = implode('/', func_get_args());
         }
 
         $path = str_replace('\\','/', $path);
@@ -169,4 +169,3 @@ if (! function_exists('base_url')) {
 
 /* End of file functions.php */
 /* Location: ./(<application folder>/)bootstrap/functions.php */
-

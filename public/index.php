@@ -22,7 +22,7 @@
  *
  */
 
-$applicationPath = '../application';
+$applicationPath = __DIR__ . '/../application';
 
 
 /*

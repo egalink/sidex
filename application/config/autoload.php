@@ -17,6 +17,7 @@ return array(
 
         'Model'         => '\Sidex\Database\ORM\Model',
         'View'          => '\Sidex\Http\Response\View',
+        'File'          => '\Sidex\Http\Input\File',
 
     ),
 

@@ -12,7 +12,7 @@ return array(
      *
      */
 
-    'controller' => 'CalendarioController',
+    'controller' => 'ArchivoController',
 
 
     /**

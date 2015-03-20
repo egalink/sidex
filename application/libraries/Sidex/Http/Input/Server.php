@@ -1,6 +1,6 @@
 <?php namespace Sidex\Http\Input;
 
-use Sidex\Http\Input\InputInterface as InputInterface;
+use Sidex\Http\Input\InputInterface;
 
 class Server implements InputInterface {
 

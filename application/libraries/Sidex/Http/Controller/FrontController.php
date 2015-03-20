@@ -1,7 +1,7 @@
 <?php namespace Sidex\Http\Controller;
 
-use \Sidex\Http\Request\Url as Url;
-use \Sidex\Http\Controller\FrontControllerInterface as FrontControllerInterface;
+use \Sidex\Http\Request\Url;
+use \Sidex\Http\Controller\FrontControllerInterface;
 
 class FrontController implements FrontControllerInterface {
 

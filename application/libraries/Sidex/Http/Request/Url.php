@@ -1,7 +1,7 @@
 <?php namespace Sidex\Http\Request;
 
-use \Sidex\Http\Request\UrlInterface as UrlInterface;
-use \Sidex\Http\Input\Server as Server;
+use \Sidex\Http\Request\UrlInterface;
+use \Sidex\Http\Input\Server;
 
 class Url implements UrlInterface {
 

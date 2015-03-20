@@ -1,6 +1,5 @@
 <?php namespace Sidex\Start\Framework;
 
-use Exception;
 use \Sidex\Http\Controller\FrontController;
     // uses: \Sidex\Http\Request\Url as Url,
     // uses: \Sidex\Http\Controller\FrontControllerInterface as FrontControllerInterface;
@@ -12,16 +11,17 @@ class Application {
      *
      * @var \Sidex\Http\Controller\FrontController Object
      */
-    protected $FrontController;
+    protected $frontController;
 
     /**
-     * constructor de la clase.
+     * Class constructor.
      *
      * @access public
      */
     function __construct()
     {
-        exit("Hi Sidex application!");
+        $config = require APPATH . 'config/sidex.php';
+        $this->frontController = new FrontController($config);
     }
 
     /**
@@ -29,7 +29,10 @@ class Application {
      *
      * @return void
      */
-    public function run() {}
+    public function run()
+    {
+        $this->frontController->run();
+    }
 
     // end class...
 }

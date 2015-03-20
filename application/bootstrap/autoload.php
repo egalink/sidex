@@ -33,8 +33,8 @@ if (file_exists($composerAutoloader = APPATH . 'vendor/autoload.php')) {
  *
  */
 
-require APPATH . 'libraries/ClassLoader.php';
-$ClassLoader = new \Sidex\ClassLoader(require APPATH . 'config/autoload.php');
+require_once APPATH . 'libraries/autoload.php';
+$ClassLoader = new \Sidex\Autoload\ClassLoader;
 $ClassLoader->register();
 
 

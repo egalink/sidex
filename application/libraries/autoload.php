@@ -1,4 +1,4 @@
-<?php namespace Sidex;
+<?php namespace Sidex\Autoload;
 
 /*
  * ----------------------------------------------------------------------------
@@ -62,6 +62,9 @@ class ClassLoader {
      */
     public function __construct(array $config = array())
     {
+        if (empty($config) === true) {
+            $config = require APPATH . 'config/autoload.php';
+        }
         $this->configure($config);
     }
 
@@ -73,7 +76,7 @@ class ClassLoader {
     public function register()
     {
         if ($this->registered === false) {
-            $this->registered = spl_autoload_register(['\Sidex\ClassLoader', 'load']);
+            $this->registered = spl_autoload_register([$this, 'load']);
         }
     }
 
