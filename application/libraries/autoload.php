@@ -42,18 +42,18 @@ class ClassLoader {
     protected $registered = false;
 
     /**
+     * The class aliases array.
+     *
+     * @var array
+     */
+    protected $aliases = array();
+
+    /**
      * The registered paths.
      *
      * @var array
      */
     protected $paths = array();
-
-    /**
-     * The array of class aliases.
-     *
-     * @var array
-     */
-    protected $aliases = array();
 
     /**
      * The class constructor.
@@ -62,9 +62,6 @@ class ClassLoader {
      */
     public function __construct(array $config = array())
     {
-        if (empty($config) === true) {
-            $config = require APPATH . 'config/autoload.php';
-        }
         $this->configure($config);
     }
 
@@ -88,7 +85,7 @@ class ClassLoader {
      */
     public function load($className)
     {
-        if ($this->isClassAlias($className) === true) {
+        if ($this->alias($className) === true) {
             return;
         }
 
@@ -96,7 +93,7 @@ class ClassLoader {
 
         foreach($this->paths as $path) {
             if (is_file(
-                $realPath = $this->normalizePath($path, $fileName)) === true) {
+                $realPath = normalize_path($path, $fileName)) === true) {
                 $fileName = $realPath;
             }
         }
@@ -109,14 +106,12 @@ class ClassLoader {
      *
      * @access protected
      * @param  array  $config
-     * @return $this
      */
     protected function configure(array $config)
     {
         foreach($config as $key => $value) {
             $this->setConfig($key, $value);
         }
-        return $this;
     }
 
     /**
@@ -125,37 +120,45 @@ class ClassLoader {
      * @access protected
      * @param  string  $key
      * @param  mixed   $value
-     * @return void
      */
     protected function setConfig($key, $value = null)
     {
-        if (isset($this->{$key}) === true) {
-            $this->{$key} = $value;
-        }
+        if (isset($this->{$key}) === true) { $this->{$key} = $value; }
     }
 
     /**
-     * Implementing the lazy class loading.
+     * Implementing the lazy class loading pattern.
      *
      * @access protected
      * @param  string  $className
      * @return boolean
      */
-    protected function isClassAlias($className)
+    protected function alias($className)
     {
         $isAlias = in_array($className, array_keys($this->aliases));
 
         if ($isAlias) {
-            $alias = array_flip([$className]);
-            $class = array_intersect_key($this->aliases, $alias);
-            class_alias($class[$className], $className);
+            $this->createAlias($className);
         }
 
         return $isAlias;
     }
 
     /**
-     * Get the normal file name for a class.
+     * Creates an alias for a class.
+     *
+     * @access protected
+     * @param  string  $className
+     */
+    protected function createAlias($className)
+    {
+        $alias = array_flip([$className]);
+        $class = array_intersect_key($this->aliases, $alias);
+        class_alias($class[$className], $className);
+    }
+
+    /**
+     * Get the normal file path for a class.
      *
      * @access protected
      * @param  string  $className
@@ -164,36 +167,17 @@ class ClassLoader {
     protected function normalizeClass($className)
     {
         $className = ltrim($className, '\\');
-        $fileName  = '';
+        $classPath = '';
         $namespace = '';
         $separator = DIRECTORY_SEPARATOR;
 
         if ($lastNsPos = strrpos($className, '\\')) {
             $namespace = substr($className, 0, $lastNsPos);
             $className = substr($className, $lastNsPos +1);
-            $fileName  = str_replace('\\', $separator, $namespace) . $separator;
+            $classPath = str_replace('\\', $separator, $namespace) . $separator;
         }
 
-        $fileName .= str_replace('_', $separator, $className) . '.php';
-        return $fileName;
-    }
-
-    /**
-     * Builds a file path with the appropriate directory separator.
-     *
-     * @access protected
-     * @param  string  $path
-     * @return string
-     */
-    protected function normalizePath($path = '')
-    {
-        if (func_num_args() > 1) {
-            $path = implode('/', func_get_args());
-        }
-
-        $path = str_replace('\\','/', $path);
-        $path = preg_replace('/\/+/', DIRECTORY_SEPARATOR, $path);
-        return $path;
+        return $classPath . str_replace('_', $separator, $className) . '.php';
     }
 
     // end class...

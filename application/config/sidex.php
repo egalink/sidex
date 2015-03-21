@@ -2,6 +2,18 @@
 
 return array(
 
+    /*
+     * ------------------------------------------------------------------------
+     * APPLICATION DEBUG MODE
+     * ------------------------------------------------------------------------
+     *
+     * When your application is in debug mode, detailed error messages will be
+     * shown on every error. If disabled, a simple generic error page is shown.
+     *
+     */
+
+    'debug' => true,
+
     /**
      * ------------------------------------------------------------------------
      * DEFAULT CONTROLLER CLASS NAME
@@ -26,6 +38,21 @@ return array(
      */
 
     'action' => null,
+
+
+    /*
+     * ------------------------------------------------------------------------
+     * USER-DEFINED ERROR HANDLER
+     * ------------------------------------------------------------------------
+     *
+     * You can define a custom error handler, useful for custom error messages
+     * or logging.
+     *
+     * The custom error handler must be a valid clousure (or callback).
+     *
+     */
+
+    'handler' => null,
 
 );
 
