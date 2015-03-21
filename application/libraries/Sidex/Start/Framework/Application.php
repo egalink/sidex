@@ -8,18 +8,11 @@ use \Sidex\Http\Controller\FrontController;
 class Application {
 
     /**
-     * The main array of config values.
+     * Application config parameters.
      *
      * @var array
      */
     protected $config = array();
-
-    /**
-     * A Front Controller class instance.
-     *
-     * @var \Sidex\Http\Controller\FrontController Object
-     */
-    protected $frontController;
 
     /**
      * Class constructor.
@@ -33,10 +26,8 @@ class Application {
             die("You must provide an array with the necessary settings for the application.");
         else $this->config = $config;
 
-        // 1.- set the error handler:
-        // 2.- set the exception error handler for logging errors and shutdown
-        //     the application:
-        $this->setExceptionErrorHandler();
+        // configure the error exception handler and initialize it:
+        $this->setApplicationErrorHandler();
     }
 
     /**
@@ -46,22 +37,24 @@ class Application {
      */
     public function run()
     {
-        $this->frontController = new FrontController($this->config);
-        $this->frontController->run();
+        exit("Hi my friend, this framework is under construction.");
     }
 
     /**
-     * Create a instance of ErrorExceptionHandler class.
+     * Configure the error exception handler and initialize it.
      *
-     * 1.- set the error handler.
+     * 1.- set the global application error handler.
      * 2.- set the exception error handler for logging errors and shutdown
      *     the application.
      *
      * @access protected
      */
-    protected function setExceptionErrorHandler()
+    protected function setApplicationErrorHandler()
     {
-        $exceptionErrorHandler = new ErrorExceptionHandler($this->config);
+        $errorExceptionHandler = new ErrorExceptionHandler;
+        $errorExceptionHandler->run(function($e) {
+            debug($e);exit;
+        });
     }
 
     // end class...

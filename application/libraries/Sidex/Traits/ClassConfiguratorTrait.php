@@ -2,7 +2,7 @@
 
 use \ReflectionClass;
 
-trait ConfigureClassesTrait {
+trait ClassConfiguratorTrait {
 
     /**
      * Configure the given class with array of values.
@@ -23,5 +23,5 @@ trait ConfigureClassesTrait {
     // end trait...
 }
 
-/* End of file ConfigureClassesTrait.php */
-/* Location: ./(<application folder>/libraries/<namespace>)/ConfigureClassesTrait.php */
+/* End of file ClassConfiguratorTrait.php */
+/* Location: ./(<application folder>/libraries/<namespace>)/ClassConfiguratorTrait.php */

@@ -5,32 +5,19 @@ use ErrorException;
 class ErrorExceptionHandler {
 
     /**
-     * Use traits.
-     */
-    use \Sidex\Traits\ConfigureClassesTrait;
-
-    /**
-     * A user-defined error handler clousure.
+     * Configure the error and exception handler and initialize it.
      *
-     * @var Closure Object
+     * @access public
+     * @param  mixed  $handler
      */
-    protected $handler;
-
-    /**
-     * Class constructor.
-     *
-     * @param  array  $config
-     */
-    public function __construct(array $config = array())
+    public function run($handler)
     {
-        $this->configureClass($this, $config);
-
         // set the global application error handler:
         $this->setErrorHandler();
 
-        // set the exception error handler for logging errors and shutdown
-        // the application:
-        $this->setExceptionHandler($this->handler);
+        // set the exception error handler, useful for logging errors and/or
+        // shutdown the application:
+        $this->setExceptionHandler($handler);
     }
 
     /**
@@ -38,7 +25,7 @@ class ErrorExceptionHandler {
      *
      * @access public
      */
-    public function setErrorHandler()
+    protected function setErrorHandler()
     {
         set_error_handler([$this, 'handleErrors']);
     }
@@ -47,15 +34,11 @@ class ErrorExceptionHandler {
      * Define a global application exception handler.
      *
      * @access public
-     * @param  mixed
+     * @param  mixed  $handler (a valid clousure or callback.)
      */
-    public function setExceptionHandler($clousure)
+    public function setExceptionHandler($handler)
     {
-        if (is_null($clousure) === false) {
-            set_exception_handler($clousure);
-        } else {
-            set_exception_handler([$this, 'handleExceptions']);
-        }
+        set_exception_handler($handler);
     }
 
     /**
@@ -79,18 +62,6 @@ class ErrorExceptionHandler {
         }
 
         throw new ErrorException($message, 0, $errno, $file, $line);
-    }
-
-    /**
-     * The application-defined exception handler method.
-     *
-     * @access public
-     * @param  Exception Object  $e
-     * @return void
-     */
-    public function handleExceptions($e)
-    {
-        debug($e);exit;
     }
 
     // end class...
