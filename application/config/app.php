@@ -56,6 +56,6 @@ return array(
 
 );
 
-/* End of file sidex.php */
-/* Location: ./(<application folder>/)config/sidex.php */
+/* End of file app.php */
+/* Location: ./(<application folder>/)config/app.php */
 

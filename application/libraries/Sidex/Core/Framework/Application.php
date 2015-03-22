@@ -1,9 +1,7 @@
-<?php namespace Sidex\Start\Framework;
+<?php namespace Sidex\Core\Framework;
 
-use \Sidex\Start\Framework\ErrorExceptionHandler;
-use \Sidex\Http\Controller\FrontController;
-    // uses: \Sidex\Http\Request\Url as Url,
-    // uses: \Sidex\Http\Controller\FrontControllerInterface as FrontControllerInterface;
+use \Sidex\Core\Framework\ErrorExceptionHandler;
+use \Sidex\Core\Framework\Log;
 
 class Application {
 
@@ -27,7 +25,7 @@ class Application {
         else $this->config = $config;
 
         // configure the error exception handler and initialize it:
-        $this->setApplicationErrorHandler();
+        $this->runApplicationErrorHandler();
     }
 
     /**
@@ -49,11 +47,17 @@ class Application {
      *
      * @access protected
      */
-    protected function setApplicationErrorHandler()
+    protected function runApplicationErrorHandler()
     {
         $errorExceptionHandler = new ErrorExceptionHandler;
         $errorExceptionHandler->run(function($e) {
-            debug($e);exit;
+            Log::error($e);
+            header('HTTP/1.1 500 Internal Server Error');
+            echo(sprintf('%s in %s (%d)',
+                $e->getMessage(),
+                $e->getFile(),
+                $e->getLine()
+            ));
         });
     }
 

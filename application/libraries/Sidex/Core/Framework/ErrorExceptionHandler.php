@@ -1,4 +1,4 @@
-<?php namespace Sidex\Start\Framework;
+<?php namespace Sidex\Core\Framework;
 
 use ErrorException;
 

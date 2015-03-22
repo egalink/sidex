@@ -40,7 +40,7 @@ require __DIR__ . '/autoload.php';
  *
  */
 
-$app = new \Sidex\Start\Framework\Application(require APPATH . 'config/sidex.php');
+$app = new \Sidex\Core\Framework\Application(require APPATH . 'config/app.php');
 
 
 /*

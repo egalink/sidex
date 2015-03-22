@@ -1,5 +1,6 @@
 /application/composer.phar
 /application/composer.lock
+/application/logs/*
 /application/vendor
 .DS_Store
 Thumbs.db
