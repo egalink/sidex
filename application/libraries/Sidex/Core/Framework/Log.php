@@ -19,7 +19,7 @@ class Log {
     /**
      * Write an error exception into a log file.
      *
-     * @access public static
+     * @access static
      * @param  Exception  $exception
      * @param  string     $file
      */

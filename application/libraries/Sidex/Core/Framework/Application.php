@@ -35,7 +35,9 @@ class Application {
      */
     public function run()
     {
-        exit("Hi my friend, this framework is under construction.");
+        exit("Hi my friend, this framework is under construction.");/*
+        $frontController = new \Sidex\Http\Controller\FrontController($this->config);
+        $frontController->run();/***/
     }
 
     /**
