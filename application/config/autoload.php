@@ -15,10 +15,10 @@ return array(
 
     'aliases' => array(
 
-        'Log'           => '\Sidex\Core\Framework\Log',
-        'View'          => '\Sidex\Http\Response\View',
-        'Model'         => '\Sidex\Database\ORM\Model',
-        'File'          => '\Sidex\Http\Input\File',
+        'Log'   => '\Sidex\Core\Framework\Log',
+        'View'  => '\Sidex\Http\Response\View',
+        'Model' => '\Sidex\Database\ORM\Model',
+        'File'  => '\Sidex\Http\Input\File',
 
     ),
 

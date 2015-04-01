@@ -24,7 +24,7 @@ return array(
      *
      */
 
-    'controller' => 'ArchivoController',
+    'controller' => 'BaseController',
 
 
     /**
@@ -37,7 +37,7 @@ return array(
      *
      */
 
-    'action' => null,
+    'action' => 'index',
 
 
     /*
@@ -48,7 +48,7 @@ return array(
      * You can define a custom error handler, useful for custom error messages
      * or logging.
      *
-     * The custom error handler must be a valid clousure (or callback).
+     * The custom error handler must be a valid clousure or callback.
      *
      */
 
@@ -58,4 +58,3 @@ return array(
 
 /* End of file app.php */
 /* Location: ./(<application folder>/)config/app.php */
-

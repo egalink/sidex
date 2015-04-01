@@ -24,7 +24,7 @@ class Application {
         else $this->config = $config;
 
         // configure the error exception handler and initialize it:
-        $this->runApplicationErrorHandler();
+        $this->applicationErrorHandler(new ErrorExceptionHandler);
     }
 
     /**
@@ -34,7 +34,7 @@ class Application {
      */
     public function run()
     {
-        exit("Hi my friend, this framework is under construction.");/*
+        // exit("Hi my friend, this framework is under construction.");/*
         $frontController = new \Sidex\Http\Controller\FrontController($this->config);
         $frontController->run();/***/
     }
@@ -48,10 +48,9 @@ class Application {
      *
      * @access protected
      */
-    protected function runApplicationErrorHandler()
+    protected function applicationErrorHandler(ErrorExceptionHandler $handler)
     {
-        $errorExceptionHandler = new ErrorExceptionHandler;
-        $errorExceptionHandler->run(function($e) {
+        $handler->run(function($e) {
             Log::error($e);
             header('HTTP/1.1 500 Internal Server Error');
             echo(sprintf('%s in %s (%d)',
