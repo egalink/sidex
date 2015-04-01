@@ -3,7 +3,7 @@
 
 /*
  *-----------------------------------------------------------------------------
- * ADDING ADDITIONAL PHP FUNCTIONS
+ * ADDITIONAL PHP FUNCTIONS
  *-----------------------------------------------------------------------------
  *
  * The additional php functions for your application.

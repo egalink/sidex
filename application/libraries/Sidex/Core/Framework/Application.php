@@ -13,15 +13,14 @@ class Application {
     protected $config = array();
 
     /**
-     * Class constructor.
+     * Constructor.
      *
-     * @access public
      * @param  array  $config
      */
     public function __construct(array $config = array())
     {
         if (empty($config) === true)
-            die("You must provide an array with the necessary settings for the application.");
+            die("You must provide an array with the necessary settings to run the application.");
         else $this->config = $config;
 
         // configure the error exception handler and initialize it:

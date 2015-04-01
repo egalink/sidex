@@ -15,8 +15,9 @@ return array(
 
     'aliases' => array(
 
-        'Model'         => '\Sidex\Database\ORM\Model',
+        'Log'           => '\Sidex\Core\Framework\Log',
         'View'          => '\Sidex\Http\Response\View',
+        'Model'         => '\Sidex\Database\ORM\Model',
         'File'          => '\Sidex\Http\Input\File',
 
     ),
