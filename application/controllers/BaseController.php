@@ -3,16 +3,6 @@
 class BaseController {
 
     /**
-     * Class constructor.
-     *
-     * @access public
-     */
-    public function __construct()
-    {
-        // do stuff...
-    }
-
-    /**
      * Say Hello!
      *
      * @access public

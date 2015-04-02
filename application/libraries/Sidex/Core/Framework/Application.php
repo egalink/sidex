@@ -1,6 +1,7 @@
 <?php namespace Sidex\Core\Framework;
 
 use \Sidex\Core\Framework\ErrorExceptionHandler;
+use \Sidex\Http\Controller\FrontController;
 use \Sidex\Core\Framework\Log;
 
 class Application {
@@ -34,31 +35,42 @@ class Application {
      */
     public function run()
     {
-        // exit("Hi my friend, this framework is under construction.");/*
-        $frontController = new \Sidex\Http\Controller\FrontController($this->config);
-        $frontController->run();/***/
+        $frontController = new FrontController($this->config);
+        $frontController->run();
     }
 
     /**
-     * Configure the error exception handler and initialize it.
+     * This is the error exception handler for the application.
+     *
+     * @access public
+     * @param  ErrorException Object  $e
+     * @return void
+     */
+    public function errorHandler($e)
+    {
+        ob_clean();
+        Log::error($e);
+        header('HTTP/1.1 500 Internal Server Error');
+        exit(sprintf('%s in %s (%d)',
+            $e->getMessage(),
+            $e->getFile(),
+            $e->getLine()
+        ));
+    }
+
+    /**
+     * Configure the error exception handler to initialize it.
      *
      * 1.- set the global application error handler.
-     * 2.- set the exception error handler for logging errors and shutdown
+     * 3.- set the exception error handler for logging errors and shutdown
      *     the application.
      *
      * @access protected
+     * @param  ErrorExceptionHandler Object  $handler
      */
     protected function applicationErrorHandler(ErrorExceptionHandler $handler)
     {
-        $handler->run(function($e) {
-            Log::error($e);
-            header('HTTP/1.1 500 Internal Server Error');
-            echo(sprintf('%s in %s (%d)',
-                $e->getMessage(),
-                $e->getFile(),
-                $e->getLine()
-            ));
-        });
+        $handler->initialize([$this, 'errorHandler']);
     }
 
     // end class...

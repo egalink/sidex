@@ -9,29 +9,23 @@
         <meta name="description" content="<?php echo $title;?>">
         <link href="<?php echo base_url('favicon.ico');?>" rel="shortcut icon">
         <style type="text/css">
-            * {
-                margin: 0px;
-                padding: 0px;
-            }
+            * { margin: 0px; padding: 0px; }
 
-            body {
-                height: 100%;
-                text-align: center;
-            }
+            body { height: 100%; text-align: center; }
 
             h1 {
                 color: #38D;
                 display: block;
-                font-family: sans-serif;
-                font-size: 2em;
+                font-family: monospace;
+                font-size: 2.6em;
+                font-weight: normal;
+                letter-spacing: 2px;
                 margin: -58px auto 0px auto;
                 top: 50%;
+                text-shadow: 1px 1px 1px rgba(0,0,0, .2);
             }
 
-            body, h1 {
-                position: absolute;
-                width: 100%;
-            }
+            body, h1 { position: absolute; width: 100%; }
         </style>
     </head>
 

@@ -5,26 +5,33 @@ use ErrorException;
 class ErrorExceptionHandler {
 
     /**
+     * Save the exception handler that will be used by the application.
+     *
+     * @var mixed
+     */
+    private $handler;
+
+    /**
      * Configure the error and exception handler and initialize it.
      *
-     * @access public
-     * @param  mixed  $handler
+     * @return void
      */
-    public function run($handler)
+    public function initialize($handler)
     {
-        // establishes the general and fatal error handler for the application:
+        $this->handler($handler);
         $this->setErrorHandler();
-        $this->setFatalHandler($handler);
+        $this->setFatalHandler();
 
         // set the exception error handler, useful for logging errors and/or
         // shutdown the application:
-        $this->setExceptionHandler($handler);
+        set_exception_handler($this->handler);
     }
 
     /**
-     * Establishes a general error handler for the application.
+     * Establishes a general error handler.
      *
-     * @access public
+     * @access protected
+     * @return void
      */
     protected function setErrorHandler()
     {
@@ -32,31 +39,19 @@ class ErrorExceptionHandler {
     }
 
     /**
-     * Establishes a fatal error handler for the application.
+     * Establishes a fatal error handler.
      *
-     * @access public
-     * @param  mixed  $handler (a valid clousure or callback)
+     * @access protected
+     * @return void
      */
-    public function setFatalHandler($handler)
+    protected function setFatalHandler()
     {
-        register_shutdown_function([$this, 'fatalHandler'], $handler);
-    }
-
-    /**
-     * Define a global application exception handler.
-     *
-     * @access public
-     * @param  mixed  $handler (a valid clousure or callback)
-     */
-    public function setExceptionHandler($handler)
-    {
-        set_exception_handler($handler);
+        register_shutdown_function([$this, 'fatalHandler'], $this->handler);
     }
 
     /**
      * The application-defined error handler method.
      *
-     * @access public
      * @param  integer  $errno
      * @param  string   $message
      * @param  string   $file
@@ -79,17 +74,31 @@ class ErrorExceptionHandler {
     /**
      * The application-defined fatal error handler method.
      *
-     * @access public
-     * @param  mixed  $handler (a valid clousure or callback)
      * @return void
      */
-    public function fatalHandler($handler)
+    public function fatalHandler()
     {
         if ($error = error_get_last()) {
-            ob_clean();
+            //   ob_clean();
             extract($error);
             $exception = new ErrorException($message, $type, 0, $file, $line);
-            call_user_func($handler, $exception);
+            call_user_func($this->handler, $exception);
+        }
+    }
+
+    /**
+     * Get/Set the exception handler that will be used by the application.
+     *
+     * @access protected
+     * @param  mixed  $handler (a valid clousure or callback)
+     * @return mixed
+     */
+    protected function handler($handler = null)
+    {
+        if (is_null($handler) === true) {
+            return $this->handler;
+        } else {
+            return $this->handler = $handler;
         }
     }
 
