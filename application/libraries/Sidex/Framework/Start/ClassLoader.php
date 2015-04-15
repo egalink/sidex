@@ -1,4 +1,4 @@
-<?php namespace Sidex\Core\Framework;
+<?php namespace Sidex\Framework\Start;
 
 /*
  * ----------------------------------------------------------------------------

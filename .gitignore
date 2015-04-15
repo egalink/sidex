@@ -1,28 +1,7 @@
 /application/composer.phar
 /application/composer.lock
-/application/logs/*
 /application/vendor
+/application/logs/*
 .DS_Store
 Thumbs.db
 sidex-framework.geany
-
-# -----------------------------------------------------------------------------
-# For Testing Branch:
-# -----------------------------------------------------------------------------
-
-# Ignore all controllers, except BaseController.php:
-/application/controllers
-! /application/controllers/BaseController.php
-
-# Ignore all models:
-/application/models
-
-# Ignore all view files, except in BaseController folder:
-/application/views
-! /application/views/BaseController
-
-# Ignore all files in public folder, except .htaccess, index.php, favicon.ico:
-/public
-! /public/.htaccess
-! /public/index.php
-! /public/favicon.ico

@@ -1,6 +1,6 @@
-<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
+<?php if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
-class BaseController {
+class MainController {
 
     /**
      * Say Hello!
@@ -9,7 +9,8 @@ class BaseController {
      */
     public function index()
     {
-        $view = new View('BaseController/index', [
+        exit("Hola " . __CLASS__);
+        $view = new View('MainController/index', [
             'title'    => 'Sidex Framework',
             'greeting' => 'Hi Welcome to Sidex Framework!',
         ]);
@@ -21,5 +22,5 @@ class BaseController {
     // end class...
 }
 
-/* End of file BaseController.php */
-/* Location: ./(<application folder>/)controllers/BaseController.php */
+/* End of file MainController.php */
+/* Location: ./(<application folder>/)controllers/MainController.php */

@@ -5,7 +5,7 @@ $database = array();
 
 $database['mysql'] = array(
 
-    'dsn'       => "mysql:host=localhost;dbname=proveedores",
+    'dsn'       => "mysql:host=127.0.0.1;dbname=proveedores",
     'username'  => "root",
     'password'  => "mysqlroot",
 
