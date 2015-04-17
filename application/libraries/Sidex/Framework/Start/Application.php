@@ -5,9 +5,9 @@ use Sidex\Framework\Controller\FrontController;
 class Application {
 
     /**
-     * A front controller instance:
+     * Sidex\Framework\Controller\FrontController Object
      *
-     * @var Sidex\Framework\Controller\FrontController Object
+     * @access public
      */
     public $fController;
 

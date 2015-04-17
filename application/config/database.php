@@ -1,4 +1,4 @@
-<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
+<?php if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
 $dbDriver = 'mysql';
 $database = array();

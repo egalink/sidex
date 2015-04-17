@@ -1,11 +1,10 @@
 <?php namespace Sidex\Framework\Controller;
 
-use ReflectionClass;
-use InvalidArgumentException;
+use ReflectionClass,
+    InvalidArgumentException;
 use Sidex\Framework\Request\Url;
-use Sidex\Framework\Configurator\ClassConfig;
 
-class FrontController extends ClassConfig implements FrontControllerInterface {
+class FrontController implements FrontControllerInterface {
 
     protected $controller  = self::DEFAULT_CONTROLLER;
     protected $action      = self::DEFAULT_ACTION;
@@ -34,10 +33,10 @@ class FrontController extends ClassConfig implements FrontControllerInterface {
         $controller = ucfirst(strtolower($controller)) . 'Controller';
 
         if (! class_exists($controller)) {
-            throw new \InvalidArgumentException("The controller: '{$controller}' does not exists.");
+            throw new InvalidArgumentException("The controller: '{$controller}' does not exists.");
         }
 
-        $this->controller = $controller;
+        $this->set('controller', $controller);
         return $this;
     }
 
@@ -55,7 +54,7 @@ class FrontController extends ClassConfig implements FrontControllerInterface {
             throw new InvalidArgumentException("The action: '{$action}' is not defined.");
         }
 
-        $this->action = $action;
+        $this->set('action', $action);
         return $this;
     }
 
@@ -68,7 +67,7 @@ class FrontController extends ClassConfig implements FrontControllerInterface {
      */
     public function setParams(array $params)
     {
-        $this->params = $params;
+        $this->set('params', $params);
         return $this;
     }
 
@@ -83,6 +82,29 @@ class FrontController extends ClassConfig implements FrontControllerInterface {
     }
 
     /**
+     * Takes an array of values to set as configuration attributes.
+     *
+     * @access protected
+     * @param  array  $options (the array of values)
+     */
+    protected function configure(array $options)
+    {
+        foreach ($options as $key => $val) $this->set($key, $val);
+    }
+
+    /**
+     * Set a value as configuration attribute.
+     *
+     * @access protected
+     * @param  string $attribute (the attribute name)
+     * @param  mixed  $value
+     */
+    protected function set($attribute, $value)
+    {
+        if (isset($this->{$attribute}) === true) $this->{$attribute} = $value;
+    }
+
+    /**
      * Gets the client request.
      *
      * @access private
@@ -90,7 +112,7 @@ class FrontController extends ClassConfig implements FrontControllerInterface {
      */
     private function getClientRequest(Url $url)
     {
-        $ruri = $url->ruri();
+        $ruri = $url->requestUri();
 
         if ($ruri != '') {
             $this->configureRequest($ruri);

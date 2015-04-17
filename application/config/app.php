@@ -1,4 +1,4 @@
-<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
+<?php if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
 return array(
 
@@ -26,7 +26,6 @@ return array(
 
     'controller' => 'MainController',
 
-
     /**
      * ------------------------------------------------------------------------
      * DEFAULT CONTROLLER ACTION NAME
@@ -38,7 +37,6 @@ return array(
      */
 
     'action' => 'index',
-
 
     /*
      * ------------------------------------------------------------------------

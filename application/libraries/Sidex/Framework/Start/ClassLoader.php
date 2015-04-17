@@ -1,6 +1,6 @@
-<?php namespace Sidex\Framework\Start;
+<?php if (! defined('APPATH')) exit('No direct script access allowed.');
 
-/*
+/**
  * ----------------------------------------------------------------------------
  * THE SIDEX CLASS LOADER (PSR-0)
  * ----------------------------------------------------------------------------

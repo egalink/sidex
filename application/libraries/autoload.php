@@ -1,15 +1,13 @@
-<?php if (! defined('APPATH')) exit('No direct script access allowed.');
+<?php require __DIR__ . '/Sidex/Framework/Start/ClassLoader.php';
 
-require __DIR__ . '/Sidex/Framework/Start/ClassLoader.php';
-
-class Autoload extends \Sidex\Framework\Start\ClassLoader {
+class Autoload extends ClassLoader {
 
     /**
      * Constructor.
      *
      * @access public
      */
-    public function Autoload()
+    public function __construct()
     {
         $this->configure(require APPATH . 'config/autoload.php');
     }

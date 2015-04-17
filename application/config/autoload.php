@@ -1,4 +1,4 @@
-<?php  if ( ! defined('APPATH')) exit('No direct script access allowed.');
+<?php if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
 return array(
 
@@ -13,14 +13,7 @@ return array(
      *
      */
 
-    'aliases' => array(
-
-        'Log'   => '\Sidex\Core\Framework\Log',
-        'View'  => '\Sidex\Http\Response\View',
-        'Model' => '\Sidex\Database\ORM\Model',
-        'File'  => '\Sidex\Http\Input\File',
-
-    ),
+    'aliases' => array(),
 
 
     /**

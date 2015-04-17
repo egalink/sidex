@@ -4,8 +4,6 @@ use Sidex\Framework\Input\Server;
 
 class Url implements UrlInterface {
 
-    const FRONT_CONTROLLER_NAME = FCNAME;
-
     /**
      * Sidex\Framework\Input\Server Object
      *
@@ -36,7 +34,7 @@ class Url implements UrlInterface {
      *
      * @return string (the requested URI)
      */
-    public function ruri()
+    public function requestUri()
     {
         $requestUri = $this->server->get('REQUEST_URI');
         $scriptName = $this->server->get('SCRIPT_NAME');
