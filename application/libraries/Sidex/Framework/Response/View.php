@@ -1,11 +1,7 @@
 <?php namespace Sidex\Framework\Response;
 
-<<<<<<< HEAD
 use Exception,
     InvalidArgumentException;
-=======
-use Exception;
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
 
 class View {
 
@@ -18,11 +14,7 @@ class View {
     /**
      * View class constructor.
      *
-<<<<<<< HEAD
      * @param  string $view (the view name)
-=======
-     * @param  string $view (the view name.)
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
      * @param  array  $variables
      * @return void
      */
@@ -40,25 +32,16 @@ class View {
     /**
      * Take the name of a view file for display to the user.
      *
-<<<<<<< HEAD
      * @param  string  $view (empty string)
      * @return Sidex\Framework\Response\View Object
-=======
-     * @param  string  $view (empty string.)
-     * @return Sidex\Http\Response\View Object
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
      */
     public function make($view = '')
     {
         if (is_string($view) and $view != '') {
             $this->setView($view);
-<<<<<<< HEAD
         } else {
             throw new InvalidArgumentException("The view name is not set correctly.");
         }
-=======
-        } else throw new Exception("The view name is not set correctly.");
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
 
         return $this;
     }
@@ -66,15 +49,9 @@ class View {
     /**
      * Add a piece of data to the view.
      *
-<<<<<<< HEAD
      * @param  string  $name  (the variable name)
      * @param  mixed   $value (default null)
      * @return Sidex\Framework\Response\View Object
-=======
-     * @param  string  $name  (the variable name.)
-     * @param  mixed   $value (default null.)
-     * @return Sidex\Http\Response\View Object
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
      */
     public function with($name = '', $value = null)
     {
@@ -110,11 +87,7 @@ class View {
      * Get the view's rendering.
      *
      * @access private
-<<<<<<< HEAD
      * @return buffer (the rendered view)
-=======
-     * @return buffer (the rendered view.)
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
      */
     private function content()
     {
@@ -131,22 +104,12 @@ class View {
      * Add a view.
      *
      * @access private
-<<<<<<< HEAD
      * @param  string  $view (the view name)
      */
     private function setView($view = '')
     {
         $viewPath = sprintf('%s/%s.php', $this->viewPath, $view);
         $viewFile = application_path($viewPath);
-=======
-     * @param  string  $view (the view name.)
-     * @return void
-     */
-    private function setView($view = '')
-    {
-        $viewPath = sprintf("%s/%s.php", APPATH . $this->viewPath, $view);
-        $viewFile = $this->normalizePath($viewPath);
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
         $this->viewFile = $viewFile;
 
         if (is_file($this->viewFile) === false) {
@@ -154,21 +117,6 @@ class View {
         }
     }
 
-<<<<<<< HEAD
-=======
-    /**
-     * Builds a file path with the appropriate directory separator.
-     *
-     * @access private
-     * @param  string
-     * @return string path
-     */
-    private function normalizePath($path = '')
-    {
-        return normalize_path($path);
-    }
-
->>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
     // end class...
 }
 
