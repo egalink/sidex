@@ -15,7 +15,11 @@ return array(
 
     'aliases' => array(
 
+<<<<<<< HEAD
         'View'  => '\Sidex\Framework\Response\View',
+=======
+        'View' => 'Sidex\Framework\Response\View',
+>>>>>>> e1ecc90ae7c36c1aa6cfa64fed4d543cce1673a9
 
     ),
 

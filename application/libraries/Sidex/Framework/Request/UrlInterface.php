@@ -1,4 +1,4 @@
-<? namespace Sidex\Framework\Request;
+<?php namespace Sidex\Framework\Request;
 
 interface UrlInterface {
 

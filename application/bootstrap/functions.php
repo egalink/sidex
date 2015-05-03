@@ -53,6 +53,23 @@ if (! function_exists('application_path')) {
     }
 }
 
+if (! function_exists('asset')) {
+
+    /**
+     * Generate a URL to an application asset.
+     *
+     * @param  string  $uri
+     * @return URL to an asset
+     */
+    function asset($uri = '')
+    {
+        $requestUri = $_SERVER['REQUEST_URI'];
+        $fcBasename = pathinfo(FCPATH, PATHINFO_BASENAME);
+        $path2asset = substr($requestUri, 0, strrpos($requestUri, $fcBasename));
+        $path2asset.= $fcBasename;
+        return sprintf('%s/%s', $path2asset, $uri);
+    }
+}
 
 // ----------------------------------------------------------------------------
 // DEBUGGING:

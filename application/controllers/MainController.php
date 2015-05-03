@@ -9,7 +9,6 @@ class MainController {
      */
     public function index()
     {
-        exit("Hola " . __CLASS__);
         $view = new View('MainController/index', [
             'title'    => 'Sidex Framework',
             'greeting' => 'Hi Welcome to Sidex Framework!',
