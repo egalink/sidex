@@ -13,7 +13,11 @@ return array(
      *
      */
 
-    'aliases' => array(),
+    'aliases' => array(
+
+        'View'  => '\Sidex\Framework\Response\View',
+
+    ),
 
 
     /**

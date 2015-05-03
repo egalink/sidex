@@ -33,8 +33,7 @@ if (file_exists($composerAutoloader = APPATH . 'vendor/autoload.php')) {
  *
  */
 
-$sidexAutoloader = require_once APPATH . 'libraries/autoload.php';
-$sidexAutoloader->register();
+require_once APPATH . 'libraries/autoload.php';
 
 
 /* End of file autoload.php */

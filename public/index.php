@@ -75,4 +75,3 @@ require_once APPATH . 'bootstrap/start.php';
 
 /* End of file index.php */
 /* Location: ./(<server folder>/)index.php */
-

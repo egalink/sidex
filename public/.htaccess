@@ -13,6 +13,3 @@
     # Submitted by: ElliotHaughin
     ErrorDocument 404 /index.php
 </IfModule>
-
-#Disable system navigation by folders:
-Options All -Indexes

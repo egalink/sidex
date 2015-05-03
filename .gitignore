@@ -1,7 +1,5 @@
 /application/composer.phar
 /application/composer.lock
 /application/vendor
-/application/logs/*
 .DS_Store
 Thumbs.db
-sidex-framework.geany

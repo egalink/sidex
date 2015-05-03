@@ -3,6 +3,13 @@
     "homepage": "https://github.com/egalink/sidex",
     "description": "Sidex php framework, the little son of PHP developers.",
     "license": "MIT",
+    "authors": [
+        {
+            "name": "Jakim Hernández Arrieta",
+            "email": "egalink@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.36"
     }
