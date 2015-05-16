@@ -2,7 +2,7 @@
 
 interface FrontControllerInterface {
 
-    const DEFAULT_CONTROLLER = 'MainController';
+    const DEFAULT_CONTROLLER = 'BaseController';
     const DEFAULT_ACTION     = 'index';
 
     /**

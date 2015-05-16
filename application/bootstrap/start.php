@@ -19,8 +19,8 @@ require __DIR__ . '/functions.php';
  *-----------------------------------------------------------------------------
  *
  * Sidex provides a convenient automatically class loader for our
- * application. So that we do not have to worry about the loading of any our
- * classes manually.
+ * application. So that we do not have to worry about the loading of any
+ * our classes manually.
  *
  * We just need to utilize it!
  *
@@ -34,13 +34,13 @@ require __DIR__ . '/autoload.php';
  * TURN ON THE LIGHTS
  * ----------------------------------------------------------------------------
  *
- * The first thing we will do is create a new Sidex application instance which
- * serves as the "glue" for all the components of Sidex, and is the
- * IoC container for the system binding all of the various parts.
+ * The first thing we will do is create a new Sidex application instance
+ * which serves as the "glue" for all the components of Sidex, and is
+ * the IoC container for the system binding all of the various parts.
  *
  */
 
-$app = new \Sidex\Framework\Start\Application(require APPATH . 'config/app.php');
+$app = new Sidex\Framework\Start\Application(require APPATH . 'config/app.php');
 
 
 /*

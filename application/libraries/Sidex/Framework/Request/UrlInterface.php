@@ -2,8 +2,6 @@
 
 interface UrlInterface {
 
-    const FRONT_CONTROLLER_NAME = FCNAME;
-
     /**
      * Returns the URI which was given in order to access to any page from
      * the application.

@@ -1,11 +1,11 @@
 <?php if ( ! defined('APPATH')) exit('No direct script access allowed.');
 
-/**
- * ----------------------------------------------------------------------------
- * ADDITIONAL PHP FUNCTIONS FOR SIDEX
- * ----------------------------------------------------------------------------
+/*
+ *-----------------------------------------------------------------------------
+ * ADDITIONAL PHP FUNCTIONS
+ *-----------------------------------------------------------------------------
  *
- * The additional functions for your application.
+ * The additional php functions for your application.
  *
  */
 
@@ -20,7 +20,6 @@ if (! function_exists('normalize_path')) {
     /**
      * Builds a file path with the appropriate directory separator.
      *
-     * @access private
      * @param  string
      * @return string path
      */
@@ -30,8 +29,7 @@ if (! function_exists('normalize_path')) {
             $path = implode('/', func_get_args());
         }
 
-        $path = str_replace('\\','/', $path);
-        $path = preg_replace('/\/+/', DIRECTORY_SEPARATOR, $path);
+        $path = preg_replace('/\/+/', '/', str_replace('\\', '/', $path));
         return $path;
     }
 }
@@ -43,8 +41,7 @@ if (! function_exists('application_path')) {
      * Returns the path within APPATH that was generated in the file
      * index.php (front controller) with the appropriate directory separator.
      *
-     * @access public
-     * @param  string $path (default empty string.)
+     * @param  string
      * @return string path
      */
     function application_path($path = '')
@@ -52,6 +49,7 @@ if (! function_exists('application_path')) {
         return normalize_path(APPATH, $path);
     }
 }
+
 
 if (! function_exists('asset')) {
 
@@ -71,6 +69,7 @@ if (! function_exists('asset')) {
     }
 }
 
+
 // ----------------------------------------------------------------------------
 // DEBUGGING:
 // ----------------------------------------------------------------------------
@@ -82,9 +81,8 @@ if (! function_exists('debug')) {
      * Displays information about a variable in a way that's readable by
      * humans.
      *
-     * @access public
      * @param  mixed
-     * @return html
+     * @return void
      */
     function debug()
     {
@@ -108,9 +106,8 @@ if (! function_exists('vdump')) {
      * This function displays structured information about one or more
      * expressions that includes its type and value.
      *
-     * @access public
      * @param  mixed
-     * @return html
+     * @return void
      */
     function vdump()
     {

@@ -1,5 +1,5 @@
 sidex
 =====
 
-Sidex php framework, the little son of PHP developers.
+Sidex PHP framework, the little son of PHP developers.
 

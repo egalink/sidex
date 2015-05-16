@@ -89,7 +89,9 @@ class FrontController implements FrontControllerInterface {
      */
     protected function configure(array $options)
     {
-        foreach ($options as $key => $val) $this->set($key, $val);
+        foreach ($options as $attr => $val) {
+            $this->set($attr, $val);
+        }
     }
 
     /**
@@ -101,7 +103,9 @@ class FrontController implements FrontControllerInterface {
      */
     protected function set($attribute, $value)
     {
-        if (isset($this->{$attribute}) === true) $this->{$attribute} = $value;
+        if (isset($this->{$attribute}) === true) {
+            $this->{$attribute} = $value;
+        }
     }
 
     /**

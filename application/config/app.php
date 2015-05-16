@@ -24,7 +24,7 @@ return array(
      *
      */
 
-    'controller' => 'MainController',
+    'controller' => 'BaseController',
 
     /**
      * ------------------------------------------------------------------------
