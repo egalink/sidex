@@ -9,7 +9,7 @@ class BaseController {
      */
     public function index()
     {
-        $view = new View('BaseController/index', [
+        $view = new View('index', [
             'title'    => 'Sidex Framework',
             'greeting' => 'Hi Welcome to Sidex Framework!',
         ]);
