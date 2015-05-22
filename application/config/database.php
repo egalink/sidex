@@ -5,14 +5,13 @@ $database = array();
 
 $database['mysql'] = array(
 
-    'dsn'       => "mysql:host=127.0.0.1;dbname=proveedores",
+    'dsn'       => "mysql:host=127.0.0.1;dbname=sidex",
     'username'  => "root",
-    'password'  => "mysqlroot",
+    'password'  => "",
 
     'queryes'   => array(
         "SET SESSION sql_mode = 'STRICT_ALL_TABLES';",
         "SET names 'utf8' COLLATE 'utf8_general_ci';",
-        "SET lc_time_names = 'es_ES';",
     ),
 
     'options'   => array(

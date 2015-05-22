@@ -1,7 +1,7 @@
 {
-    "name": "sidex/framework",
+    "name": "sidex",
     "homepage": "https://github.com/egalink/sidex",
-    "description": "Sidex php framework, the little son of PHP developers.",
+    "description": "Sidex PHP framework, the little son of PHP developers.",
     "license": "MIT",
     "authors": [
         {

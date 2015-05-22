@@ -59,13 +59,15 @@ if (! function_exists('asset')) {
      * @param  string  $uri
      * @return URL to an asset
      */
-    function asset($uri = '')
+    function asset()
     {
         $requestUri = $_SERVER['REQUEST_URI'];
         $fcBasename = pathinfo(FCPATH, PATHINFO_BASENAME);
         $path2asset = substr($requestUri, 0, strrpos($requestUri, $fcBasename));
-        $path2asset.= $fcBasename;
-        return sprintf('%s/%s', $path2asset, $uri);
+
+        $uri = implode('/', func_get_args());
+        $uri = implode('/', [$path2asset, $fcBasename, $uri]);
+        return normalize_path($uri);
     }
 }
 
