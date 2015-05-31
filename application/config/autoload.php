@@ -15,7 +15,9 @@ return array(
 
     'aliases' => array(
 
-        'View' => 'Sidex\Framework\Response\View',
+        'Input'     => 'Sidex\Framework\Input\Input',
+        'Connector' => 'Sidex\Framework\Database\PDO\Connector',
+        'View'      => 'Sidex\Framework\Response\View',
 
     ),
 

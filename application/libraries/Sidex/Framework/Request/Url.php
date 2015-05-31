@@ -1,11 +1,11 @@
 <?php namespace Sidex\Framework\Request;
 
-use Sidex\Framework\Input\Server;
+use Sidex\Framework\Input\Input;
 
 class Url implements UrlInterface {
 
     /**
-     * Sidex\Framework\Input\Server Object
+     * Sidex\Framework\Input\Input Object
      *
      * @access protected
      */
@@ -25,7 +25,7 @@ class Url implements UrlInterface {
      */
     public function __construct()
     {
-        $this->server = new Server;
+        $this->input = new Input('server');
     }
 
     /**
@@ -36,8 +36,8 @@ class Url implements UrlInterface {
      */
     public function requestUri()
     {
-        $requestUri = $this->server->get('REQUEST_URI');
-        $scriptName = $this->server->get('SCRIPT_NAME');
+        $requestUri = $this->input->get('REQUEST_URI');
+        $scriptName = $this->input->get('SCRIPT_NAME');
         $scriptPath = dirname($scriptName);
 
         switch ($requestUri) {
@@ -53,7 +53,7 @@ class Url implements UrlInterface {
                 break;
 
             default:
-                $requestUri = $this->server->get('PATH_INFO');
+                $requestUri = $this->input->get('PATH_INFO');
         }
 
         return $this->parseUrl($requestUri);

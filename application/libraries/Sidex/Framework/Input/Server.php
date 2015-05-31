@@ -2,19 +2,31 @@
 
 class Server implements InputInterface {
 
+
     /**
-     * Checks if the specified index exists.
+     * Retrieve an input item from the server.
      *
      * @access public
-     * @param  string  $index (the name of the index)
+     * @param  string  $key
      * @return mixed
      */
-    public function get($index = '')
+    public function get($key = null)
     {
-        return filter_has_var(INPUT_SERVER, $index) ? $_SERVER[$index] : null;
+        return filter_input(INPUT_SERVER, $key, self::FILTER_SANITIZE);
     }
 
-    // end class...
+
+    /**
+     * Get a subset of the items from the input data.
+     *
+     * @access public
+     * @param  array  $keys
+     * @return array
+     */
+    public function only($keys = array()) {}
+
+
+    // end class.
 }
 
 /* End of file Server.php */

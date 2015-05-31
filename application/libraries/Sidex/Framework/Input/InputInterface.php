@@ -2,16 +2,37 @@
 
 interface InputInterface {
 
+
     /**
-     * Checks if the specified index exists.
+     * HTML-escape '"<>& and characters with ASCII value less than 32,
+     * optionally strip or encode other special characters.
+     *
+     * @var mixed
+     */
+    const FILTER_SANITIZE = FILTER_SANITIZE_SPECIAL_CHARS;
+
+
+    /**
+     * Retrieve an input item from the request.
      *
      * @access public
-     * @param  string  $index (the name of the index)
+     * @param  string  $key
      * @return mixed
      */
-    public function get($index = '');
+    public function get($key = '');
 
-    // end interface...
+
+    /**
+     * Get a subset of the items from the input data.
+     *
+     * @access public
+     * @param  array  $keys
+     * @return array
+     */
+    public function only($keys = array());
+
+
+    // end interface.
 }
 
 /* End of file InputInterface.php */
