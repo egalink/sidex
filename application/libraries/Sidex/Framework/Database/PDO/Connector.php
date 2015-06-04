@@ -13,13 +13,13 @@ class Connector {
         $config = $this->dbconfig('config/database.php');
         extract(require $config);
 
-        $this->db = new PDO($dsn, $username, $password, $options);
+        $this->pdo = new PDO($dsn, $username, $password, $options);
 
         foreach($queryes as $q) {
-            $this->db->prepare($q)->execute();
+            $this->pdo->prepare($q)->execute();
         }
 
-        return $this->db;
+        return $this->pdo;
     }
 
 
