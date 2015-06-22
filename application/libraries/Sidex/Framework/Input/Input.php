@@ -43,6 +43,10 @@ class Input implements InputInterface {
                 $this->method = new Files;
                 break;
 
+            case 'cookie':
+                $this->method = new Cookie;
+                break;
+
             case 'get': case 'post': case 'request': default:
                 $this->method = new Request;
                 break;
@@ -60,6 +64,20 @@ class Input implements InputInterface {
     public function get($key = null)
     {
         return $this->method->get($key);
+    }
+
+
+    /**
+     * Determine if the request contains a non-empty value for an input
+     * item.
+     *
+     * @access public
+     * @param  string  $key
+     * @return bool
+     */
+    public function has($key = null)
+    {
+        return !is_null($this->method->get($key));
     }
 
 

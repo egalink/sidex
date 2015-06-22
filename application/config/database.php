@@ -5,9 +5,9 @@ $database = array();
 
 $database['mysql'] = array(
 
-    'dsn'       => "mysql:host=127.0.0.1;dbname=sidex",
+    'dsn'       => "mysql:host=127.0.0.1;dbname=sidex_framework",
     'username'  => "root",
-    'password'  => "",
+    'password'  => "mysqlroot",
 
     'queryes'   => array(
         "SET SESSION sql_mode = 'STRICT_ALL_TABLES';",

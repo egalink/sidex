@@ -1,6 +1,7 @@
 <?php namespace Sidex\Framework\Start;
 
 use Sidex\Framework\Controller\FrontController;
+use Sidex\Framework\Auth\Session;
 
 class Application {
 
@@ -9,7 +10,14 @@ class Application {
      *
      * @access public
      */
-    public $fController;
+    public $fc;
+
+    /**
+     * Sidex\Framework\Auth\Session Object
+     *
+     * @access public
+     */
+    public $ss;
 
     /**
      * Constructor.
@@ -18,7 +26,8 @@ class Application {
      */
     public function __construct(array $config = array())
     {
-        $this->fController = new FrontController($config);
+        $this->ss = new Session($config);
+        $this->fc = new FrontController($config);
     }
 
     /**
@@ -28,7 +37,8 @@ class Application {
      */
     public function run()
     {
-        $this->fController->run();
+        $this->fc->run();
+        $this->ss->run();
     }
 
     // end class...

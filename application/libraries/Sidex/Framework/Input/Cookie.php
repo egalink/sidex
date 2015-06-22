@@ -1,10 +1,10 @@
 <?php namespace Sidex\Framework\Input;
 
-class Server implements InputInterface {
+class Cookie implements InputInterface {
 
 
     /**
-     * Retrieve an input item from the server.
+     * Retrieve an input item from the cookie.
      *
      * @access public
      * @param  string  $key
@@ -12,7 +12,7 @@ class Server implements InputInterface {
      */
     public function get($key = null)
     {
-        return filter_input(INPUT_SERVER, $key, self::FILTER_SANITIZE);
+        return filter_input(INPUT_COOKIE, $key, self::FILTER_SANITIZE);
     }
 
 
@@ -40,5 +40,5 @@ class Server implements InputInterface {
     // end class.
 }
 
-/* End of file Server.php */
-/* Location: ./(<application folder>/libraries/<namespace>)/Server.php */
+/* End of file Cookie.php */
+/* Location: ./(<application folder>/libraries/<namespace>)/Cookie.php */

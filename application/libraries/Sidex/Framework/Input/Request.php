@@ -17,6 +17,17 @@ class Request implements InputInterface {
 
 
     /**
+     * Determine if the request contains a non-empty value for an input
+     * item.
+     *
+     * @access public
+     * @param  string  $key
+     * @return bool
+     */
+    public function has($key = null) {}
+
+
+    /**
      * Get a subset of the items from the input data.
      *
      * @access public

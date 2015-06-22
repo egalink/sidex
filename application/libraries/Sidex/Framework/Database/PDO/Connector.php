@@ -5,7 +5,12 @@ use PDO;
 class Connector {
 
 
-    protected $db;
+    /**
+     * PDO Object
+     *
+     * @access protected
+     */
+    protected $pdo;
 
 
     protected function connect()

@@ -40,6 +40,26 @@ return array(
 
     /*
      * ------------------------------------------------------------------------
+     * SESSION CONFIGURATION
+     * ------------------------------------------------------------------------
+     *
+     * The Session class stores session information for each user as
+     * serialized (and optionally encrypted) data in a cookie.
+     *
+     * expire - The number of SECONDS you want the session to last.
+     * cookie - The name of the session cookie name.
+     *
+     */
+
+    'session' => array(
+
+        'expire' => 7200,
+        'cookie' => 'sidex',
+
+    ),
+
+    /*
+     * ------------------------------------------------------------------------
      * USER-DEFINED ERROR HANDLER
      * ------------------------------------------------------------------------
      *
