@@ -17,7 +17,7 @@ return array(
 
         'Input'     => 'Sidex\Framework\Input\Input',
         'Connector' => 'Sidex\Framework\Database\PDO\Connector',
-        'Session'   => 'Sidex\Framework\Auth\Session',
+        'Auth'      => 'Sidex\Framework\Session\Auth',
         'View'      => 'Sidex\Framework\Response\View',
 
     ),

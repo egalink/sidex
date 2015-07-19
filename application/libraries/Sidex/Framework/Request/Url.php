@@ -4,12 +4,14 @@ use Sidex\Framework\Input\Input;
 
 class Url implements UrlInterface {
 
+
     /**
      * Sidex\Framework\Input\Input Object
      *
      * @access protected
      */
     protected $server;
+
 
     /**
      * Pattern for friendly URL's.
@@ -18,8 +20,9 @@ class Url implements UrlInterface {
      */
     protected $regexp = '/[^a-zA-Z0-9_.]/';
 
+
     /**
-     * Constructor.
+     * The constructor
      *
      * @access public
      */
@@ -27,6 +30,7 @@ class Url implements UrlInterface {
     {
         $this->input = new Input('server');
     }
+
 
     /**
      * Returns the URI which was given in order to access to any page from
@@ -59,6 +63,7 @@ class Url implements UrlInterface {
         return $this->parseUrl($requestUri);
     }
 
+
     /**
      * Parse a correct functionally URL for the application.
      *
@@ -72,7 +77,8 @@ class Url implements UrlInterface {
         return preg_replace($this->regexp, '/', trim($parsedUrl, '/'));
     }
 
-    // end class...
+
+    // end class.
 }
 
 /* End of file Url.php */

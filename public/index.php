@@ -6,7 +6,7 @@
  * ----------------------------------------------------------------------------
  *
  * @package  Sidex
- * @version  0.1.0
+ * @version  1.0.0
  * @author   Edgar Jakim Hernández Arrieta  <egalink@gmail.com>
  *
  */
@@ -22,7 +22,7 @@
  *
  */
 
-$applicationPath = __DIR__ . '/../application';
+$applicationPath = '../application';
 
 
 /*
@@ -34,10 +34,10 @@ $applicationPath = __DIR__ . '/../application';
  *
  */
 
-// the name of this file:
+// the name of this file
 define('FCNAME', pathinfo(__FILE__, PATHINFO_BASENAME));
 
-// path to the front controller (this file):
+// path to the front controller (this file)
 define('FCPATH', str_replace('\\', '/', __DIR__ . '/'));
 
 

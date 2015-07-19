@@ -1,26 +1,45 @@
 <?php namespace Sidex\Framework\Controller;
 
-use ReflectionClass,
-    InvalidArgumentException;
-use Sidex\Framework\Request\Url;
+
+use ReflectionClass;
+use InvalidArgumentException;
+
 
 class FrontController implements FrontControllerInterface {
 
-    protected $controller  = self::DEFAULT_CONTROLLER;
-    protected $action      = self::DEFAULT_ACTION;
-    protected $params      = array();
-    protected $uriSegments = array('controller', 'action', 'params');
 
     /**
-     * Constructor.
+     * The controller class name to be instantiated.
      *
-     * @param  array  $options
+     * @var string
      */
-    public function __construct(array $options = array())
-    {
-        $this->configure($options);
-        $this->getClientRequest(new Url);
-    }
+    protected $controller = self::DEFAULT_CONTROLLER;
+
+
+    /**
+     * The action name to be called from the controller.
+     *
+     * @var string
+     */
+    protected $action = self::DEFAULT_ACTION;
+
+
+    /**
+     * The parameters to be passed to the controller action, as an indexed
+     * array.
+     *
+     * @var string
+     */
+    protected $params = array();
+
+
+    /**
+     * The URI segments allowed in the URL request.
+     *
+     * @var array
+     */
+    protected $uriSegments = array('controller', 'action', 'params');
+
 
     /**
      * Sets a controller name to be instantiated.
@@ -30,15 +49,14 @@ class FrontController implements FrontControllerInterface {
      */
     public function setController($controller)
     {
-        $controller = ucfirst(strtolower($controller)) . 'Controller';
-
         if (! class_exists($controller)) {
             throw new InvalidArgumentException("The controller: '{$controller}' does not exists.");
         }
 
-        $this->set('controller', $controller);
+        $this->controller = $controller;
         return $this;
     }
+
 
     /**
      * Sets the action name to be called from the controller.
@@ -54,9 +72,10 @@ class FrontController implements FrontControllerInterface {
             throw new InvalidArgumentException("The action: '{$action}' is not defined.");
         }
 
-        $this->set('action', $action);
+        $this->action = $action;
         return $this;
     }
+
 
     /**
      * Sets the parameters to be passed to the controller action, as an indexed
@@ -67,9 +86,10 @@ class FrontController implements FrontControllerInterface {
      */
     public function setParams(array $params)
     {
-        $this->set('params', $params);
+        $this->params = $params;
         return $this;
     }
+
 
     /**
      * Call to the controller action with an array of parameters.
@@ -81,77 +101,8 @@ class FrontController implements FrontControllerInterface {
         call_user_func_array([new $this->controller, $this->action], $this->params);
     }
 
-    /**
-     * Takes an array of values to set as configuration attributes.
-     *
-     * @access protected
-     * @param  array  $options (the array of values)
-     */
-    protected function configure(array $options)
-    {
-        foreach ($options as $attr => $val) {
-            $this->set($attr, $val);
-        }
-    }
 
-    /**
-     * Set a value as configuration attribute.
-     *
-     * @access protected
-     * @param  string $attribute (the attribute name)
-     * @param  mixed  $value
-     */
-    protected function set($attribute, $value)
-    {
-        if (isset($this->{$attribute}) === true) {
-            $this->{$attribute} = $value;
-        }
-    }
-
-    /**
-     * Gets the client request.
-     *
-     * @access private
-     * @param  Sidex\Framework\Request\Url Object in $url
-     */
-    private function getClientRequest(Url $url)
-    {
-        $ruri = $url->requestUri();
-
-        if ($ruri != '') {
-            $this->configureRequest($ruri);
-        }
-    }
-
-    /**
-     * Configures the client request.
-     *
-     * @access private
-     * @param  string $uri (the requested uri)
-     */
-    private function configureRequest($uri)
-    {
-        $segments = explode('/', $uri, 3);
-
-        // gets all available segments in the uri:
-        foreach ($this->uriSegments as $key => $val) {
-            ${$val} = isset ($segments[$key])? $segments[$key] : null;
-        }
-
-        if (isset($controller)) {
-            $this->setController($controller);
-        }
-
-        if (isset($action)) {
-            $this->setAction($action);
-        }
-
-        if (isset($params)) {
-            $this->setParams(explode('/', $params));
-        }
-    }
-
-    // end class...
+    // end class.
 }
 
 /* End of file FrontController.php */

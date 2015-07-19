@@ -2,8 +2,10 @@
 
 interface FrontControllerInterface {
 
+
     const DEFAULT_CONTROLLER = 'BaseController';
     const DEFAULT_ACTION     = 'index';
+
 
     /**
      * Sets a controller name to be instantiated.
@@ -13,6 +15,7 @@ interface FrontControllerInterface {
      */
     public function setController($controller);
 
+
     /**
      * Sets the action name to be called from the controller.
      *
@@ -20,6 +23,7 @@ interface FrontControllerInterface {
      * @return Sidex\Framework\Controller\FrontController Object
      */
     public function setAction($action);
+
 
     /**
      * Sets the parameters to be passed to the controller action, as an indexed
@@ -30,6 +34,7 @@ interface FrontControllerInterface {
      */
     public function setParams(array $params);
 
+
     /**
      * Call to the controller action with an array of parameters.
      *
@@ -37,7 +42,8 @@ interface FrontControllerInterface {
      */
     public function run();
 
-    // end interface...
+
+    // end interface.
 }
 
 /* End of file FrontControllerInterface.php */

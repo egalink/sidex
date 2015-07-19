@@ -10,7 +10,7 @@ interface UrlInterface {
      */
     public function requestUri();
 
-    // end interface...
+    // end interface.
 }
 
 /* End of file UrlInterface.php */
