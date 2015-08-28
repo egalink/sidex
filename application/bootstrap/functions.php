@@ -38,15 +38,47 @@ if (! function_exists('normalize_path')) {
 if (! function_exists('application_path')) {
 
     /**
-     * Returns the path within APPATH that was generated in the file
-     * index.php (front controller) with the appropriate directory separator.
+     * Alias to appath()
      *
      * @param  string
      * @return string path
      */
     function application_path($path = '')
     {
+        return appath($path);
+    }
+}
+
+
+if (! function_exists('appath')) {
+
+    /**
+     * Returns the path within APPATH that was generated in the file
+     * index.php (front controller) with the appropriate directory separator.
+     *
+     * @param  string
+     * @return string path
+     */
+    function appath($path = '')
+    {
         return normalize_path(APPATH, $path);
+    }
+}
+
+
+if (! function_exists('fcpath')) {
+
+    /**
+     * Returns the path within FCPATH that was generated in the file
+     * index.php (front controller) with the appropriate directory separator.
+     *
+     * @access public
+     * @param  string $path (default empty string.)
+     * @return string path
+     */
+    function fcpath($path = '')
+    {
+        return normalize_path(FCPATH, $path);
     }
 }
 
@@ -56,7 +88,7 @@ if (! function_exists('asset')) {
     /**
      * Generate a URL to an application asset.
      *
-     * @param  string  $uri
+     * @param  mixed
      * @return URL to an asset
      */
     function asset()
@@ -64,7 +96,6 @@ if (! function_exists('asset')) {
         $requestUri = $_SERVER['REQUEST_URI'];
         $fcBasename = pathinfo(FCPATH, PATHINFO_BASENAME);
         $path2asset = substr($requestUri, 0, strrpos($requestUri, $fcBasename));
-
         $uri = implode('/', func_get_args());
         $uri = implode('/', [$path2asset, $fcBasename, $uri]);
         return normalize_path($uri);
