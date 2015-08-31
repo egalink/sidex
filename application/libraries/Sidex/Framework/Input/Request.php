@@ -12,7 +12,25 @@ class Request implements InputInterface {
      */
     public function get($key = null)
     {
-        return isset($_REQUEST[$key]) ? filter_var($_REQUEST[$key], self::FILTER_SANITIZE) : null;
+        if (isset($_REQUEST[$key]) === true) {
+
+            // http://php.net/manual/en/function.gettype.php
+            $type = gettype($_REQUEST[$key]);
+
+            switch($type) {
+
+                case 'array':
+                    return filter_var_array($_REQUEST[$key], self::FILTER_SANITIZE);
+
+                case 'null':
+                    return null;
+
+                default:
+                    return filter_var($_REQUEST[$key], self::FILTER_SANITIZE);
+            }
+        }
+
+        return null;
     }
 
 
