@@ -103,6 +103,22 @@ if (! function_exists('asset')) {
 }
 
 
+if (! function_exists('redirect')) {
+
+    /**
+     * Send a raw HTTP header redirect.
+     *
+     * @param string   $uri
+     * @param bollean  $code = 302:Found, 301:Moved Permanently
+     */
+    function redirect($uri = '/', $code = 302)
+    {
+        header("Location:" .$url, true, $code);
+        exit;
+    }
+}
+
+
 // ----------------------------------------------------------------------------
 // DEBUGGING:
 // ----------------------------------------------------------------------------
