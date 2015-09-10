@@ -113,7 +113,7 @@ if (! function_exists('redirect')) {
      */
     function redirect($uri = '/', $code = 302)
     {
-        header("Location:" .$url, true, $code);
+        header("Location:" .$uri, true, $code);
         exit;
     }
 }
