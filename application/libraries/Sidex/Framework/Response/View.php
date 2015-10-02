@@ -82,6 +82,35 @@ class View {
 
         echo $buffer;
     }
+    
+    /**
+     * Set a new viewPath.
+     *
+     * @access public
+     * @param  string  $path
+     * @return Sidex\Framework\Response\View Object
+     */
+    public function setPath($viewPath)
+    {
+        $this->viewPath = $this->normalize($viewPath);
+        return $this;
+    }
+
+    /**
+     * Builds a file path with the appropriate directory separator.
+     *
+     * @access private
+     * @param  string
+     * @return string path
+     */
+    private function normalize($path = '')
+    {
+        if (func_num_args() > 1) {
+            $path = implode('/', func_get_args());
+        }
+        $path = preg_replace('/\/+/', '/', str_replace('\\', '/', $path));
+        return $path;
+    }
 
     /**
      * Get the view's rendering.
